@@ -1,0 +1,108 @@
+package com.yulia.milich.chess;
+
+import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Layout;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+
+public class TheChessGame extends AppCompatActivity implements View.OnClickListener{
+
+    private ImageButton board[][] = new ImageButton[8][8];
+    private TableRow rows[] = new TableRow[8];
+    private boolean oneClick = true;
+    private ImageButton helpButton;
+    private ChessManager cM;
+    private int lastPosition;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_the_chess_game);
+
+        cM = new ChessManager(this);
+
+        createBoard();
+        cM.setBeginningBoard(); // placing the figures in the right place for the beginning of the game
+
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()){
+//            case 44:
+//                break;
+            default:
+//                if (oneClick){
+//                    //oneClick =false;
+////                    helpButton = (ImageButton) v;
+//                    cM.showOptions((ImageButton) v);
+//
+//                }
+                if(v.getTag().equals("possibleMove")){
+                    cM.moveToEmptyPlaceFromAGivenPlace(this.lastPosition, v.getId());
+                }
+                else if(v.getTag().equals("possibleKill")){
+                    cM.moveToKillFromAGivenPlace(this.lastPosition, v.getId());
+                }
+                else{
+                    cM.showOptions((ImageButton) v);
+                    this.lastPosition = v.getId();
+                }
+        }
+//        switch (v.getTag())
+//        {
+//            case R.mipmap.rook_white:
+//                Rook figure = new Rook("white");
+//                break;
+//            case "king_white":
+//                King figure = new King("white");
+//                break;
+//
+//        }
+    }
+
+    public ImageButton[][] getBoard(){
+        return board;
+    }
+
+    public void createBoard(){
+        TableLayout l1 = (TableLayout) findViewById(R.id.chessBoard);
+
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+
+        for (int i=0; i<8; i++){
+            rows[i] = new TableRow(this); // creating the rows in the TableLayout
+            for(int j=0; j<8; j++){
+                board[i][j] = new ImageButton(this); // creating the button and setting an id
+                board[i][j].setId(i*10+j);
+
+                board[i][j].setTag(""); // setting a tag - the tag represents the figure that is placed on the button
+                board[i][j].setLayoutParams(new TableRow.LayoutParams(width, height)); // setting the size of the button
+
+                // setting the background so it will be a chess board (with black and white, except now it is blue and white)
+//                if((i+j)%2 == 1){
+//                    board[i][j].setBackgroundResource(R.color.white);
+//                }
+//                else {
+//                    board[i][j].setBackgroundResource(R.color.someBlue);
+//                }
+
+                board[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP); // that way the image on the button is in the right size
+                board[i][j].setOnClickListener(this);
+                rows[i].addView(board[i][j]);
+            }
+            l1.addView(rows[i]);
+        }
+        cM.clearBoardBackground();
+    }
+}
