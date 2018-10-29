@@ -39,6 +39,7 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra("playerBlackStr", playerBlackStr);
                 break;
 
+//                sdasidhasoidh
 //            default: finishActivity(1);
 //                finish();
 //                break;
