@@ -16,7 +16,6 @@ public class King {
     }
 
     public void showOptions() {
-//        boolean pieceInTheWay = false;
         int x = this.position / 10;
         int y = this.position % 10;
 
@@ -33,8 +32,6 @@ public class King {
             }
         }
 
-//        pieceInTheWay = false;
-
         // beneath the king
         if(x<7) {
             if (this.figBoard[x + 1][y].getShape().equals("none")) {
@@ -43,11 +40,8 @@ public class King {
             } else {
                 board[x + 1][y].setBackgroundResource(R.color.red);
                 this.board[x + 1][y].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
-
-//        pieceInTheWay = false;
 
         // on the right (on my phone)
         if(y>0) {
@@ -57,12 +51,8 @@ public class King {
             } else {
                 board[x][y - 1].setBackgroundResource(R.color.red);
                 this.board[x][y - 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
-
-//        pieceInTheWay = false;
-
 
         // on the left
         if(y<7) {
@@ -72,7 +62,6 @@ public class King {
             } else {
                 board[x][y + 1].setBackgroundResource(R.color.red);
                 this.board[x][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -85,7 +74,6 @@ public class King {
             } else {
                 board[x + 1][y + 1].setBackgroundResource(R.color.red);
                 this.board[x + 1][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -97,7 +85,6 @@ public class King {
             } else {
                 board[x - 1][y + 1].setBackgroundResource(R.color.red);
                 this.board[x - 1][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -108,7 +95,6 @@ public class King {
             } else {
                 board[x + 1][y - 1].setBackgroundResource(R.color.red);
                 this.board[x + 1][y - 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -119,7 +105,6 @@ public class King {
             } else {
                 board[x - 1][y - 1].setBackgroundResource(R.color.red);
                 this.board[x - 1][y - 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
     }

@@ -16,7 +16,6 @@ public class Knight {
     }
 
     public void showOptions() {
-//        boolean pieceInTheWay = false;
         int x = this.position / 10;
         int y = this.position % 10;
 
@@ -28,11 +27,8 @@ public class Knight {
             } else {
                 board[x - 2][y-1].setBackgroundResource(R.color.red);
                 this.board[x - 2][y-1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
-
-//        pieceInTheWay = false;
 
         // beneath the king
         if(x>1 && y<7) {
@@ -42,11 +38,9 @@ public class Knight {
             } else {
                 board[x - 2][y + 1].setBackgroundResource(R.color.red);
                 this.board[x - 2][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
+
             }
         }
-
-//        pieceInTheWay = false;
 
         // on the right (on my phone)
         if(x>0 && y>1) {
@@ -56,12 +50,8 @@ public class Knight {
             } else {
                 board[x - 1][y - 2].setBackgroundResource(R.color.red);
                 this.board[x - 1][y - 2].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
-
-//        pieceInTheWay = false;
-
 
         // on the left
         if(x>0 && y<6) {
@@ -71,7 +61,6 @@ public class Knight {
             } else {
                 board[x - 1][y + 2].setBackgroundResource(R.color.red);
                 this.board[x - 1][y + 2].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -84,7 +73,6 @@ public class Knight {
             } else {
                 board[x + 1][y - 2].setBackgroundResource(R.color.red);
                 this.board[x + 1][y - 2].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -96,7 +84,6 @@ public class Knight {
             } else {
                 board[x + 1][y + 2].setBackgroundResource(R.color.red);
                 this.board[x + 1][y + 2].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -107,7 +94,6 @@ public class Knight {
             } else {
                 board[x + 2][y - 1].setBackgroundResource(R.color.red);
                 this.board[x + 2][y - 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
 
@@ -118,7 +104,6 @@ public class Knight {
             } else {
                 board[x + 2][y + 1].setBackgroundResource(R.color.red);
                 this.board[x + 2][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
             }
         }
     }

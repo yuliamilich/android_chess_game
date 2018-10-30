@@ -4,19 +4,12 @@ import android.widget.ImageButton;
 
 public class Rook {
     private String color;
-    //    private String theOtherColor;
     private ImageButton[][] board;
     private Figure[][] figBoard;
     private int position;
 
     public Rook(String color, ImageButton[][] board, Figure[][] figBoard, int position) {
         this.color = color;
-//        if(color.equals("white")){
-//            theOtherColor = "black";
-//        }
-//        else{
-//            theOtherColor = "white";
-//        }
         this.board = board;
         this.figBoard = figBoard;
         this.position = position;

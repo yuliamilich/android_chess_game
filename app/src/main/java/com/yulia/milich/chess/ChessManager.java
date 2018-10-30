@@ -114,6 +114,10 @@ public class ChessManager {
                 Knight knight = new Knight(color, gA.getBoard(), this.figBoard, position);
                 knight.showOptions();
                 break;
+            case "bishop":
+                Bishop bishop = new Bishop(color, gA.getBoard(), this.figBoard, position);
+                bishop.showOptions();
+                break;
 
         }
     }
