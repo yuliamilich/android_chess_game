@@ -23,6 +23,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     private ImageButton helpButton;
     private ChessManager cM;
     private int lastPosition;
+    private ImageView[][] fallenFiguresWhite = new ImageView[2][8], fallenFiguresBlack = new ImageView[2][8];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,14 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         return board;
     }
 
+    public ImageView[][] getFallenFiguresBlack() {
+        return fallenFiguresBlack;
+    }
+
+    public ImageView[][] getFallenFiguresWhite() {
+        return fallenFiguresWhite;
+    }
+
     public void createBoard(){
         TableLayout l1 = (TableLayout) findViewById(R.id.chessBoard);
 
@@ -104,5 +113,36 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             l1.addView(rows[i]);
         }
         cM.clearBoardBackground();
+    }
+
+    public void createScrollingListsForFallen(){
+        TableLayout fallenBlack = (TableLayout) findViewById(R.id.fallenBlack);
+        TableLayout fallenWhite = (TableLayout) findViewById(R.id.fallenWhite);
+
+        TableRow rowWhite[] = new TableRow[2];
+        TableRow rowBlack[] = new TableRow[2];
+
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+
+        for (int i = 0; i<2; i++){
+            rowWhite[i] = new TableRow(this);
+            rowBlack[i] = new TableRow(this);
+            for (int j = 0; j<8; j++){
+                this.fallenFiguresWhite[i][j] = new ImageView(this);
+                this.fallenFiguresBlack[i][j] = new ImageView(this);
+
+                this.fallenFiguresWhite[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
+                this.fallenFiguresBlack[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                this.fallenFiguresWhite[i][j].setLayoutParams(new TableRow.LayoutParams(width, height));
+                this.fallenFiguresBlack[i][j].setLayoutParams(new TableRow.LayoutParams(width, height));
+
+                rowWhite[i].addView(this.fallenFiguresWhite[i][j]);
+                rowBlack[i].addView(this.fallenFiguresBlack[i][j]);
+            }
+            fallenWhite.addView(rowWhite[i]);
+            fallenBlack.addView(rowBlack[i]);
+        }
     }
 }

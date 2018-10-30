@@ -19,7 +19,10 @@ public class ChessManager {
     private TheChessGame gA;
     private Figure[][] figBoard = new Figure[8][8];
     private Figure theMovedFigure = new Figure("none", "none", 0);
-    private ArrayList<Figure> fallenFigures = new ArrayList<Figure>();
+    private ArrayList<Figure> fallenFiguresWhite = new ArrayList<Figure>();
+    private ArrayList<Figure> fallenFiguresBlack = new ArrayList<Figure>();
+    private int numberOfWhiteFallen;
+    private int numberOfBlackFallen;
 //    private static String[] tagsWhite = {"rook_white", "knight_white", "bishop_white", "king_white", "queen_white",
 //            "bishop_white", "knight_white", "rook_white", "pawn_white"};
 //    private static String[] tagsBlack = {"rook_black", "knight_black", "bishop_black", "king_black", "queen_black",
@@ -55,6 +58,8 @@ public class ChessManager {
             }
         }
         clearTags();
+        numberOfBlackFallen = 0;
+        numberOfWhiteFallen = 0;
     }
 
     public void clearTags(){
@@ -156,8 +161,27 @@ public class ChessManager {
 
         //and the change from the moveToEmptyPlaceFromAGivenPlace
         //is that we need to save the fallen figure in a list and put an image beneath (or above) the board.
-        fallenFigures.add(fallen);
+        if(fallen.getColor().equals("white")){
+            fallenFiguresWhite.add(fallen);
+            numberOfWhiteFallen++;
+        }
+        else {
+            fallenFiguresBlack.add(fallen);
+            numberOfBlackFallen++;
+        }
+        AddFallenPictureToScrollView(fallen);
+
+
         //still need to show it somewhere
+    }
+
+    public void AddFallenPictureToScrollView(Figure figure){
+        if(figure.getColor().equals("white")){
+            gA.getFallenFiguresWhite()[numberOfWhiteFallen/8][numberOfWhiteFallen%8].setImageResource(figure.getImageResource());
+        }
+        else{
+            gA.getFallenFiguresBlack()[numberOfBlackFallen/8][numberOfBlackFallen%8].setImageResource(figure.getImageResource());
+        }
     }
 
 }
