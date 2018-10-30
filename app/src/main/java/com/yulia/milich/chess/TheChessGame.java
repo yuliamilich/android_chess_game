@@ -19,11 +19,14 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton board[][] = new ImageButton[8][8];
     private TableRow rows[] = new TableRow[8];
-    private boolean oneClick = true;
-    private ImageButton helpButton;
+//    private boolean oneClick = true;
+//    private ImageButton helpButton;
     private ChessManager cM;
     private int lastPosition;
-    private ImageView[][] fallenFiguresWhite = new ImageView[2][8], fallenFiguresBlack = new ImageView[2][8];
+    private ImageView[][] fallenFiguresWhite = new ImageView[2][8];
+    private ImageView[][] fallenFiguresBlack = new ImageView[2][8];
+    private TableRow rowWhite[] = new TableRow[2];
+    private TableRow rowBlack[] = new TableRow[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         createBoard();
         cM.setBeginningBoard(); // placing the figures in the right place for the beginning of the game
+
+        createScrollingListsForFallen();
+
 
     }
 
@@ -119,8 +125,8 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         TableLayout fallenBlack = (TableLayout) findViewById(R.id.fallenBlack);
         TableLayout fallenWhite = (TableLayout) findViewById(R.id.fallenWhite);
 
-        TableRow rowWhite[] = new TableRow[2];
-        TableRow rowBlack[] = new TableRow[2];
+//        TableRow rowWhite[] = new TableRow[2];
+//        TableRow rowBlack[] = new TableRow[2];
 
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
@@ -131,6 +137,9 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             for (int j = 0; j<8; j++){
                 this.fallenFiguresWhite[i][j] = new ImageView(this);
                 this.fallenFiguresBlack[i][j] = new ImageView(this);
+
+                this.fallenFiguresWhite[i][j].setId(100+i*10 + j);
+                this.fallenFiguresBlack[i][j].setId(200+i*10 + j);
 
                 this.fallenFiguresWhite[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
                 this.fallenFiguresBlack[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
