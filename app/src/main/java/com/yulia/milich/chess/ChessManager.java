@@ -20,6 +20,10 @@ public class ChessManager {
     private int numberOfWhiteFallen;
     private int numberOfBlackFallen;
 
+    private int whiteWon;
+    private int blackWon;
+    private int gamesPlayed;
+
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
     }
@@ -45,10 +49,12 @@ public class ChessManager {
         }
         for (int i = 0; i < gA.getBoard().length; i++) {
             gA.getBoard()[6][i].setImageResource(black[8]);
+            gA.getBoard()[6][i].setRotation(0);
             figBoard[6][i] = new Figure(figs[8], "black", black[8]);
         }
         for (int i = 0; i < gA.getBoard().length; i++) {
             gA.getBoard()[7][i].setImageResource(black[i]);
+            gA.getBoard()[7][i].setRotation(0);
             figBoard[7][i] = new Figure(figs[i], "black", black[i]);
         }
         for (int j = 2; j < 6; j++) {
@@ -64,6 +70,10 @@ public class ChessManager {
         numberOfWhiteFallen = 0;
         fallenFiguresWhite = new ArrayList<Figure>();
         fallenFiguresBlack = new ArrayList<Figure>();
+
+        setBoardClickable();
+        showScore();
+
     }
 
     public void clearTags() {
@@ -152,6 +162,9 @@ public class ChessManager {
             fallenFiguresBlack.add(figure);
             numberOfBlackFallen++;
         }
+        if(figure.getShape().equals("king")){
+            winner(figure);
+        }
     }
 
     public void moveFromTo(int lastPosition, int movingTo) {
@@ -186,6 +199,52 @@ public class ChessManager {
         // clear the board and the tags for the next move
         clearTags();
         clearBoardBackground();
+    }
+
+    public void winner(Figure deadKing){
+        String message ="";
+        String title = "";
+        if(deadKing.getColor().equals("white")){
+            title = "Black won!!! :D";
+            message = "White lost!!! :(";
+            this.blackWon ++;
+        }
+        else {
+            title = "White won!!! :D";
+            message = "Black lost!!! :(";
+            this.whiteWon ++;
+        }
+        this.gamesPlayed ++;
+        showScore();
+        gA.winner(title,message);
+        setBoardUnClickable();
+    }
+
+    public void reset(){
+        this.whiteWon = 0;
+        this.blackWon = 0;
+        this.gamesPlayed = 0;
+    }
+
+    public void showScore(){
+        gA.getBlackWon().setText("You won: " + this.blackWon + "/" + this.gamesPlayed);
+        gA.getWhiteWon().setText("You won: " + this.whiteWon + "/" + this.gamesPlayed);
+    }
+
+    public void setBoardUnClickable(){
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                gA.getBoard()[i][j].setClickable(false);
+            }
+        }
+    }
+
+    public void setBoardClickable(){
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                gA.getBoard()[i][j].setClickable(true);
+            }
+        }
     }
 
 }

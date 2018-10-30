@@ -1,7 +1,9 @@
 package com.yulia.milich.chess;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 public class TheChessGame extends AppCompatActivity implements View.OnClickListener{
 
@@ -22,12 +25,16 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     private int lastPosition;
     private ImageView[][] fallenFiguresWhite = new ImageView[2][8];
     private ImageView[][] fallenFiguresBlack = new ImageView[2][8];
+    private TextView whiteWon, blackWon;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_the_chess_game);
+
+        whiteWon = (TextView) findViewById(R.id.whiteWon);
+        blackWon = (TextView) findViewById(R.id.blackWon);
 
         cM = new ChessManager(this);
 
@@ -69,6 +76,14 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         return fallenFiguresWhite;
     }
 
+    public TextView getBlackWon() {
+        return blackWon;
+    }
+
+    public TextView getWhiteWon() {
+        return whiteWon;
+    }
+
     public void createBoard(){
         TableLayout l1 = (TableLayout) findViewById(R.id.chessBoard);
         TableRow rows[] = new TableRow[8];
@@ -100,6 +115,8 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             l1.addView(rows[i]);
         }
         cM.clearBoardBackground();
+
+        cM.reset();
     }
 
     public void createScrollingListsForFallen(){
@@ -135,5 +152,21 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             fallenWhite.addView(rowWhite[i]);
             fallenBlack.addView(rowBlack[i]);
         }
+    }
+
+    public void winner(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TheChessGame.this);
+
+        builder.setCancelable(true);
+        builder.setTitle(title);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setMessage(message);
+        builder.show();
     }
 }
