@@ -25,7 +25,7 @@ public class King {
                 board[x - 1][y].setBackgroundResource(R.color.green);
                 board[x - 1][y].setTag("possibleMove");
             } else {
-                if(this.figBoard[x - 1][y].getColor().equals(this.color)) {
+                if (!this.figBoard[x - 1][y].getColor().equals(this.color)) {
                     board[x - 1][y].setBackgroundResource(R.color.red);
                     this.board[x - 1][y].setTag("possibleKill");
                 }
@@ -38,8 +38,10 @@ public class King {
                 board[x + 1][y].setBackgroundResource(R.color.green);
                 board[x + 1][y].setTag("possibleMove");
             } else {
-                board[x + 1][y].setBackgroundResource(R.color.red);
-                this.board[x + 1][y].setTag("possibleKill");
+                if (!this.figBoard[x + 1][y].getColor().equals(this.color)) {
+                    board[x + 1][y].setBackgroundResource(R.color.red);
+                    this.board[x + 1][y].setTag("possibleKill");
+                }
             }
         }
 
@@ -49,8 +51,10 @@ public class King {
                 board[x][y - 1].setBackgroundResource(R.color.green);
                 board[x][y - 1].setTag("possibleMove");
             } else {
-                board[x][y - 1].setBackgroundResource(R.color.red);
-                this.board[x][y - 1].setTag("possibleKill");
+                if (!this.figBoard[x][y - 1].getColor().equals(this.color)) {
+                    board[x][y - 1].setBackgroundResource(R.color.red);
+                    this.board[x][y - 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -60,8 +64,10 @@ public class King {
                 board[x][y + 1].setBackgroundResource(R.color.green);
                 board[x][y + 1].setTag("possibleMove");
             } else {
-                board[x][y + 1].setBackgroundResource(R.color.red);
-                this.board[x][y + 1].setTag("possibleKill");
+                if (!this.figBoard[x][y + 1].getColor().equals(this.color)) {
+                    board[x][y + 1].setBackgroundResource(R.color.red);
+                    this.board[x][y + 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -72,8 +78,10 @@ public class King {
                 board[x + 1][y + 1].setBackgroundResource(R.color.green);
                 board[x + 1][y + 1].setTag("possibleMove");
             } else {
-                board[x + 1][y + 1].setBackgroundResource(R.color.red);
-                this.board[x + 1][y + 1].setTag("possibleKill");
+                if (!this.figBoard[x + 1][y + 1].getColor().equals(this.color)) {
+                    board[x + 1][y + 1].setBackgroundResource(R.color.red);
+                    this.board[x + 1][y + 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -83,8 +91,10 @@ public class King {
                 board[x - 1][y + 1].setBackgroundResource(R.color.green);
                 board[x - 1][y + 1].setTag("possibleMove");
             } else {
-                board[x - 1][y + 1].setBackgroundResource(R.color.red);
-                this.board[x - 1][y + 1].setTag("possibleKill");
+                if (!this.figBoard[x - 1][y + 1].getColor().equals(this.color)) {
+                    board[x - 1][y + 1].setBackgroundResource(R.color.red);
+                    this.board[x - 1][y + 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -93,8 +103,10 @@ public class King {
                 board[x + 1][y - 1].setBackgroundResource(R.color.green);
                 board[x + 1][y - 1].setTag("possibleMove");
             } else {
-                board[x + 1][y - 1].setBackgroundResource(R.color.red);
-                this.board[x + 1][y - 1].setTag("possibleKill");
+                if (!this.figBoard[x + 1][y - 1].getColor().equals(this.color)) {
+                    board[x + 1][y - 1].setBackgroundResource(R.color.red);
+                    this.board[x + 1][y - 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -103,8 +115,10 @@ public class King {
                 board[x - 1][y - 1].setBackgroundResource(R.color.green);
                 board[x - 1][y - 1].setTag("possibleMove");
             } else {
-                board[x - 1][y - 1].setBackgroundResource(R.color.red);
-                this.board[x - 1][y - 1].setTag("possibleKill");
+                if (!this.figBoard[x - 1][y - 1].getColor().equals(this.color)) {
+                    board[x - 1][y - 1].setBackgroundResource(R.color.red);
+                    this.board[x - 1][y - 1].setTag("possibleKill");
+                }
             }
         }
     }

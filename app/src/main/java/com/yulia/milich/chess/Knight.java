@@ -25,8 +25,10 @@ public class Knight {
                 board[x - 2][y-1].setBackgroundResource(R.color.green);
                 board[x - 2][y-1].setTag("possibleMove");
             } else {
-                board[x - 2][y-1].setBackgroundResource(R.color.red);
-                this.board[x - 2][y-1].setTag("possibleKill");
+                if (!this.figBoard[x - 2][y - 1].getColor().equals(this.color)) {
+                    board[x - 2][y - 1].setBackgroundResource(R.color.red);
+                    this.board[x - 2][y - 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -36,9 +38,10 @@ public class Knight {
                 board[x - 2][y + 1].setBackgroundResource(R.color.green);
                 board[x - 2][y + 1].setTag("possibleMove");
             } else {
-                board[x - 2][y + 1].setBackgroundResource(R.color.red);
-                this.board[x - 2][y + 1].setTag("possibleKill");
-
+                if (!this.figBoard[x - 2][y + 1].getColor().equals(this.color)) {
+                    board[x - 2][y + 1].setBackgroundResource(R.color.red);
+                    this.board[x - 2][y + 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -48,8 +51,10 @@ public class Knight {
                 board[x - 1][y - 2].setBackgroundResource(R.color.green);
                 board[x - 1][y - 2].setTag("possibleMove");
             } else {
-                board[x - 1][y - 2].setBackgroundResource(R.color.red);
-                this.board[x - 1][y - 2].setTag("possibleKill");
+                if (!this.figBoard[x - 1][y - 2].getColor().equals(this.color)) {
+                    board[x - 1][y - 2].setBackgroundResource(R.color.red);
+                    this.board[x - 1][y - 2].setTag("possibleKill");
+                }
             }
         }
 
@@ -59,8 +64,10 @@ public class Knight {
                 board[x - 1][y + 2].setBackgroundResource(R.color.green);
                 board[x - 1][y + 2].setTag("possibleMove");
             } else {
-                board[x - 1][y + 2].setBackgroundResource(R.color.red);
-                this.board[x - 1][y + 2].setTag("possibleKill");
+                if (!this.figBoard[x - 1][y + 2].getColor().equals(this.color)) {
+                    board[x - 1][y + 2].setBackgroundResource(R.color.red);
+                    this.board[x - 1][y + 2].setTag("possibleKill");
+                }
             }
         }
 
@@ -71,8 +78,10 @@ public class Knight {
                 board[x + 1][y - 2].setBackgroundResource(R.color.green);
                 board[x + 1][y - 2].setTag("possibleMove");
             } else {
-                board[x + 1][y - 2].setBackgroundResource(R.color.red);
-                this.board[x + 1][y - 2].setTag("possibleKill");
+                if (!this.figBoard[x + 1][y - 2].getColor().equals(this.color)) {
+                    board[x + 1][y - 2].setBackgroundResource(R.color.red);
+                    this.board[x + 1][y - 2].setTag("possibleKill");
+                }
             }
         }
 
@@ -82,8 +91,10 @@ public class Knight {
                 board[x + 1][y + 2].setBackgroundResource(R.color.green);
                 board[x + 1][y + 2].setTag("possibleMove");
             } else {
-                board[x + 1][y + 2].setBackgroundResource(R.color.red);
-                this.board[x + 1][y + 2].setTag("possibleKill");
+                if (!this.figBoard[x + 1][y + 2].getColor().equals(this.color)) {
+                    board[x + 1][y + 2].setBackgroundResource(R.color.red);
+                    this.board[x + 1][y + 2].setTag("possibleKill");
+                }
             }
         }
 
@@ -92,8 +103,10 @@ public class Knight {
                 board[x + 2][y - 1].setBackgroundResource(R.color.green);
                 board[x + 2][y - 1].setTag("possibleMove");
             } else {
-                board[x + 2][y - 1].setBackgroundResource(R.color.red);
-                this.board[x + 2][y - 1].setTag("possibleKill");
+                if (!this.figBoard[x + 2][y - 1].getColor().equals(this.color)) {
+                    board[x + 2][y - 1].setBackgroundResource(R.color.red);
+                    this.board[x + 2][y - 1].setTag("possibleKill");
+                }
             }
         }
 
@@ -102,8 +115,10 @@ public class Knight {
                 board[x + 2][y + 1].setBackgroundResource(R.color.green);
                 board[x + 2][y + 1].setTag("possibleMove");
             } else {
-                board[x + 2][y + 1].setBackgroundResource(R.color.red);
-                this.board[x + 2][y + 1].setTag("possibleKill");
+                if (!this.figBoard[x + 2][y + 1].getColor().equals(this.color)) {
+                    board[x + 2][y + 1].setBackgroundResource(R.color.red);
+                    this.board[x + 2][y + 1].setTag("possibleKill");
+                }
             }
         }
     }

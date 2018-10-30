@@ -122,7 +122,10 @@ public class ChessManager {
                 Queen queen = new Queen(color, gA.getBoard(), this.figBoard, position);
                 queen.showOptions();
                 break;
-
+            case "pawn":
+                Pawn pawn = new Pawn(color, gA.getBoard(), this.figBoard, position);
+                pawn.showOptions();
+                break;
         }
     }
 
