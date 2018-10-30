@@ -31,18 +31,21 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         cM = new ChessManager(this);
 
+        createScrollingListsForFallen();
+
         createBoard();
         cM.setBeginningBoard(); // placing the figures in the right place for the beginning of the game
 
-        createScrollingListsForFallen();
-
-
+        Button restart = (Button) findViewById(R.id.restart);
+        restart.setOnClickListener(this);
     }
 
     public void onClick(View v) {
         switch (v.getId()){
-//            case 44:
-//                break;
+            case R.id.restart:
+                cM.setBeginningBoard();
+                break;
+
             default:
                 if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
                     cM.moveFromTo(this.lastPosition, v.getId());

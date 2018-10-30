@@ -21,6 +21,15 @@ public class Pawn {
 
         if (this.color.equals("white")) {
             //beneath the pawn (only moves)
+            if(x == 1)
+            {
+                if(this.figBoard[x + 1][y].getShape().equals("none")){
+                    if(this.figBoard[x + 2][y].getShape().equals("none")){
+                        board[x + 2][y].setBackgroundResource(R.color.green);
+                        board[x + 2][y].setTag("possibleMove");
+                    }
+                }
+            }
             if(x<7) {
                 if (this.figBoard[x + 1][y].getShape().equals("none")) {
                     board[x + 1][y].setBackgroundResource(R.color.green);
@@ -45,6 +54,15 @@ public class Pawn {
 
         } else if (this.color.equals("black")) {
             //above the pawn (only moves)
+            if(x == 6)
+            {
+                if(this.figBoard[x - 1][y].getShape().equals("none")){
+                    if(this.figBoard[x - 2][y].getShape().equals("none")){
+                        board[x - 2][y].setBackgroundResource(R.color.green);
+                        board[x - 2][y].setTag("possibleMove");
+                    }
+                }
+            }
             if (x > 0) {
                 if (this.figBoard[x - 1][y].getShape().equals("none")) {
                     board[x - 1][y].setBackgroundResource(R.color.green);

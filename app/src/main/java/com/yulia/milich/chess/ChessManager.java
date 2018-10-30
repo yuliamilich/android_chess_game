@@ -53,10 +53,13 @@ public class ChessManager {
         }
         for (int j = 2; j < 6; j++) {
             for (int i = 0; i < gA.getBoard().length; i++) {
+                gA.getBoard()[j][i].setImageResource(0);
                 figBoard[j][i] = new Figure("none", "none", 0);
             }
         }
+        clearFallenFigures();
         clearTags();
+        clearBoardBackground();
         numberOfBlackFallen = 0;
         numberOfWhiteFallen = 0;
         fallenFiguresWhite = new ArrayList<Figure>();
@@ -91,6 +94,15 @@ public class ChessManager {
         figBoard[x][y].setColor("none");
         figBoard[x][y].setShape("none");
         figBoard[x][y].setImageResource(0);
+    }
+
+    public void clearFallenFigures(){
+        for(int i=0; i<2; i++){
+            for(int j=0; j<8; j++){
+                gA.getFallenFiguresWhite()[i][j].setImageResource(0);
+                gA.getFallenFiguresBlack()[i][j].setImageResource(0);
+            }
+        }
     }
 
     //shows the options to move the piece.
