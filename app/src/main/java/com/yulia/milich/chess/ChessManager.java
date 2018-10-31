@@ -90,6 +90,9 @@ public class ChessManager {
         showCheck();
         beginner++;
 
+        kingBlack = 73;
+        kingWhite = 03;
+
     }
 
     public void clearTags() {

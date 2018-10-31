@@ -193,10 +193,11 @@ public class King {
             if (this.figBoard[i][y].getColor().equals(this.color)) {
                 pieceInTheWay = true;
             } else {
-                pieceInTheWay = true;
-                if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook")) && !this.figBoard[i][y].getColor().equals(this.color)) {
-                    this.board[i][y].setBackgroundResource(R.color.red);
-                    this.board[i][y].setTag("possibleKill");
+                if(!this.figBoard[i][y].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook"))) {
+                        check = true;
+                    }
                 }
             }
         }
@@ -206,9 +207,11 @@ public class King {
             if (this.figBoard[i][y].getColor().equals(this.color)) {
                 pieceInTheWay = true;
             } else {
-                pieceInTheWay = true;
-                if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook")) && !this.figBoard[i][y].getColor().equals(this.color)) {
-                    check = true;
+                if(!this.figBoard[i][y].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook"))) {
+                        check = true;
+                    }
                 }
             }
         }
@@ -217,9 +220,11 @@ public class King {
             if (this.figBoard[x][i].getColor().equals(this.color)) {
                 pieceInTheWay = true;
             } else {
-                pieceInTheWay = true;
-                if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook")) && !this.figBoard[x][i].getColor().equals(this.color)) {
-                    check = true;
+                if(!this.figBoard[x][i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook"))) {
+                        check = true;
+                    }
                 }
             }
         }
@@ -228,9 +233,11 @@ public class King {
             if (this.figBoard[x][i].getColor().equals(this.color)) {
                 pieceInTheWay = true;
             } else {
-                pieceInTheWay = true;
-                if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook")) && !this.figBoard[x][i].getColor().equals(this.color)) {
-                    check = true;
+                if(!this.figBoard[x][i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook"))) {
+                        check = true;
+                    }
                 }
             }
         }
