@@ -3,6 +3,7 @@ package com.yulia.milich.chess;
 
 import android.annotation.SuppressLint;
 import android.widget.ImageButton;
+
 import java.util.ArrayList;
 
 
@@ -28,11 +29,12 @@ public class ChessManager {
     private int turn;
     private int beginner;
 
-//    private Figure kingWhite, kingBlack;
+    //    private Figure kingWhite, kingBlack;
     private int kingWhite, kingBlack;
 
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
+        this.beginner = 0;
     }
 
     // it starts the game over (setting the board to look like in the beginning).
@@ -78,12 +80,15 @@ public class ChessManager {
         fallenFiguresWhite = new ArrayList<Figure>();
         fallenFiguresBlack = new ArrayList<Figure>();
 
-        this.turn = 0;
+        if (beginner % 2 == 0)
+            this.turn = 0;
+        else this.turn = 1;
 
         setBoardClickable();
         showScore();
         showTurn();
         showCheck();
+        beginner++;
 
     }
 
@@ -117,9 +122,9 @@ public class ChessManager {
         figBoard[x][y].setImageResource(0);
     }
 
-    public void clearFallenFigures(){
-        for(int i=0; i<2; i++){
-            for(int j=0; j<8; j++){
+    public void clearFallenFigures() {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 8; j++) {
                 gA.getFallenFiguresWhite()[i][j].setImageResource(0);
                 gA.getFallenFiguresBlack()[i][j].setImageResource(0);
             }
@@ -134,7 +139,7 @@ public class ChessManager {
         int x = position / 10;
         int y = position % 10;
         String color = this.figBoard[x][y].getColor();
-        if(turn % 2 == 0 && color.equals("white")){
+        if (turn % 2 == 0 && color.equals("white")) {
             switch (this.figBoard[x][y].getShape()) {
                 case "rook":
                     Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
@@ -161,8 +166,7 @@ public class ChessManager {
                     pawn.showOptions();
                     break;
             }
-        }
-        else if(turn % 2 == 1 && color.equals("black")){
+        } else if (turn % 2 == 1 && color.equals("black")) {
             switch (this.figBoard[x][y].getShape()) {
                 case "rook":
                     Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
@@ -203,7 +207,7 @@ public class ChessManager {
             fallenFiguresBlack.add(figure);
             numberOfBlackFallen++;
         }
-        if(figure.getShape().equals("king")){
+        if (figure.getShape().equals("king")) {
             winner(figure);
         }
     }
@@ -237,16 +241,15 @@ public class ChessManager {
             gA.getBoard()[x][y].setRotation(180);
         else gA.getBoard()[x][y].setRotation(0);
 
-        if(theMovedFigure.getShape().equals("king")){
-            if(theMovedFigure.getColor().equals("white")){
+        if (theMovedFigure.getShape().equals("king")) {
+            if (theMovedFigure.getColor().equals("white")) {
                 this.kingWhite = movingTo;
-            }
-            else{
+            } else {
                 this.kingBlack = movingTo;
             }
         }
 
-        turn ++;
+        turn++;
         showTurn();
         showCheck();
 
@@ -255,61 +258,59 @@ public class ChessManager {
         clearBoardBackground();
     }
 
-    public void winner(Figure deadKing){
-        String message ="";
+    public void winner(Figure deadKing) {
+        String message = "";
         String title = "";
-        if(deadKing.getColor().equals("white")){
+        if (deadKing.getColor().equals("white")) {
             title = "Black won!!! :D";
             message = "White lost!!! :(";
-            this.blackWon ++;
-        }
-        else {
+            this.blackWon++;
+        } else {
             title = "White won!!! :D";
             message = "Black lost!!! :(";
-            this.whiteWon ++;
+            this.whiteWon++;
         }
-        this.gamesPlayed ++;
+        this.gamesPlayed++;
         showScore();
-        gA.winner(title,message);
+        gA.winner(title, message);
         setBoardUnClickable();
     }
 
-    public void reset(){
+    public void reset() {
         this.whiteWon = 0;
         this.blackWon = 0;
         this.gamesPlayed = 0;
     }
 
-    public void showScore(){
+    public void showScore() {
         gA.getBlackWon().setText("You won: " + this.blackWon + "/" + this.gamesPlayed);
         gA.getWhiteWon().setText("You won: " + this.whiteWon + "/" + this.gamesPlayed);
     }
 
-    public void setBoardUnClickable(){
-        for(int i=0; i<8; i++){
-            for(int j=0; j<8; j++){
+    public void setBoardUnClickable() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 gA.getBoard()[i][j].setClickable(false);
             }
         }
     }
 
-    public void setBoardClickable(){
-        for(int i=0; i<8; i++){
-            for(int j=0; j<8; j++){
+    public void setBoardClickable() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 gA.getBoard()[i][j].setClickable(true);
             }
         }
     }
 
     @SuppressLint("ResourceAsColor")
-    public void showTurn(){
-        if(turn%2 == 0){
+    public void showTurn() {
+        if (turn % 2 == 0) {
             gA.getBlackTurn().setText("Wait");
             gA.getBlackTurn().setTextColor(R.color.darkPurple);
             gA.getWhiteTurn().setText("Your turn");
             gA.getWhiteTurn().setTextColor(R.color.darkGreen);
-        }
-        else{
+        } else {
             gA.getBlackTurn().setText("Your turn");
             gA.getBlackTurn().setTextColor(R.color.darkGreen);
             gA.getWhiteTurn().setText("Wait");
@@ -317,20 +318,18 @@ public class ChessManager {
         }
     }
 
-    public void showCheck(){
-        King whiteKing = new King("white" , gA.getBoard(), figBoard, kingWhite);
-        King blackKing = new King("black" , gA.getBoard(), figBoard, kingBlack);
+    public void showCheck() {
+        King whiteKing = new King("white", gA.getBoard(), figBoard, kingWhite);
+        King blackKing = new King("black", gA.getBoard(), figBoard, kingBlack);
 
-        if(whiteKing.isCheck()){
+        if (whiteKing.isCheck()) {
             gA.getCheckWhite().setText("Check");
-        }
-        else {
+        } else {
             gA.getCheckWhite().setText("");
         }
-        if(blackKing.isCheck()){
+        if (blackKing.isCheck()) {
             gA.getCheckBlack().setText("Check");
-        }
-        else {
+        } else {
             gA.getCheckBlack().setText("");
         }
     }

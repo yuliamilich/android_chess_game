@@ -35,8 +35,7 @@ public class Figure {
         this.imageResource = imageResource;
     }
 
-    public void copy(Figure figure)
-    {
+    public void copy(Figure figure) {
         this.color = figure.getColor();
         this.shape = figure.getShape();
         this.imageResource = figure.getImageResource();
