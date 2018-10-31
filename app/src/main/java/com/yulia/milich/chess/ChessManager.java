@@ -1,6 +1,7 @@
 package com.yulia.milich.chess;
 
 
+import android.annotation.SuppressLint;
 import android.widget.ImageButton;
 import java.util.ArrayList;
 
@@ -23,6 +24,12 @@ public class ChessManager {
     private int whiteWon;
     private int blackWon;
     private int gamesPlayed;
+
+    private int turn;
+    private int beginner;
+
+//    private Figure kingWhite, kingBlack;
+    private int kingWhite, kingBlack;
 
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
@@ -71,8 +78,12 @@ public class ChessManager {
         fallenFiguresWhite = new ArrayList<Figure>();
         fallenFiguresBlack = new ArrayList<Figure>();
 
+        this.turn = 0;
+
         setBoardClickable();
         showScore();
+        showTurn();
+        showCheck();
 
     }
 
@@ -123,31 +134,61 @@ public class ChessManager {
         int x = position / 10;
         int y = position % 10;
         String color = this.figBoard[x][y].getColor();
-        switch (this.figBoard[x][y].getShape()) {
-            case "rook":
-                Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
-                rook.showOptions();
-                break;
-            case "king":
-                King king = new King(color, gA.getBoard(), this.figBoard, position);
-                king.showOptions();
-                break;
-            case "knight":
-                Knight knight = new Knight(color, gA.getBoard(), this.figBoard, position);
-                knight.showOptions();
-                break;
-            case "bishop":
-                Bishop bishop = new Bishop(color, gA.getBoard(), this.figBoard, position);
-                bishop.showOptions();
-                break;
-            case "queen":
-                Queen queen = new Queen(color, gA.getBoard(), this.figBoard, position);
-                queen.showOptions();
-                break;
-            case "pawn":
-                Pawn pawn = new Pawn(color, gA.getBoard(), this.figBoard, position);
-                pawn.showOptions();
-                break;
+        if(turn % 2 == 0 && color.equals("white")){
+            switch (this.figBoard[x][y].getShape()) {
+                case "rook":
+                    Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
+                    rook.showOptions();
+                    break;
+                case "king":
+                    King king = new King(color, gA.getBoard(), this.figBoard, position);
+                    king.showOptions();
+                    break;
+                case "knight":
+                    Knight knight = new Knight(color, gA.getBoard(), this.figBoard, position);
+                    knight.showOptions();
+                    break;
+                case "bishop":
+                    Bishop bishop = new Bishop(color, gA.getBoard(), this.figBoard, position);
+                    bishop.showOptions();
+                    break;
+                case "queen":
+                    Queen queen = new Queen(color, gA.getBoard(), this.figBoard, position);
+                    queen.showOptions();
+                    break;
+                case "pawn":
+                    Pawn pawn = new Pawn(color, gA.getBoard(), this.figBoard, position);
+                    pawn.showOptions();
+                    break;
+            }
+        }
+        else if(turn % 2 == 1 && color.equals("black")){
+            switch (this.figBoard[x][y].getShape()) {
+                case "rook":
+                    Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
+                    rook.showOptions();
+                    break;
+                case "king":
+                    King king = new King(color, gA.getBoard(), this.figBoard, position);
+                    king.showOptions();
+                    break;
+                case "knight":
+                    Knight knight = new Knight(color, gA.getBoard(), this.figBoard, position);
+                    knight.showOptions();
+                    break;
+                case "bishop":
+                    Bishop bishop = new Bishop(color, gA.getBoard(), this.figBoard, position);
+                    bishop.showOptions();
+                    break;
+                case "queen":
+                    Queen queen = new Queen(color, gA.getBoard(), this.figBoard, position);
+                    queen.showOptions();
+                    break;
+                case "pawn":
+                    Pawn pawn = new Pawn(color, gA.getBoard(), this.figBoard, position);
+                    pawn.showOptions();
+                    break;
+            }
         }
     }
 
@@ -195,6 +236,19 @@ public class ChessManager {
         if (theMovedFigure.getColor().equals("white"))
             gA.getBoard()[x][y].setRotation(180);
         else gA.getBoard()[x][y].setRotation(0);
+
+        if(theMovedFigure.getShape().equals("king")){
+            if(theMovedFigure.getColor().equals("white")){
+                this.kingWhite = movingTo;
+            }
+            else{
+                this.kingBlack = movingTo;
+            }
+        }
+
+        turn ++;
+        showTurn();
+        showCheck();
 
         // clear the board and the tags for the next move
         clearTags();
@@ -244,6 +298,40 @@ public class ChessManager {
             for(int j=0; j<8; j++){
                 gA.getBoard()[i][j].setClickable(true);
             }
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void showTurn(){
+        if(turn%2 == 0){
+            gA.getBlackTurn().setText("Wait");
+            gA.getBlackTurn().setTextColor(R.color.darkPurple);
+            gA.getWhiteTurn().setText("Your turn");
+            gA.getWhiteTurn().setTextColor(R.color.darkGreen);
+        }
+        else{
+            gA.getBlackTurn().setText("Your turn");
+            gA.getBlackTurn().setTextColor(R.color.darkGreen);
+            gA.getWhiteTurn().setText("Wait");
+            gA.getWhiteTurn().setTextColor(R.color.darkPurple);
+        }
+    }
+
+    public void showCheck(){
+        King whiteKing = new King("white" , gA.getBoard(), figBoard, kingWhite);
+        King blackKing = new King("black" , gA.getBoard(), figBoard, kingBlack);
+
+        if(whiteKing.isCheck()){
+            gA.getCheckWhite().setText("Check");
+        }
+        else {
+            gA.getCheckWhite().setText("");
+        }
+        if(blackKing.isCheck()){
+            gA.getCheckBlack().setText("Check");
+        }
+        else {
+            gA.getCheckBlack().setText("");
         }
     }
 

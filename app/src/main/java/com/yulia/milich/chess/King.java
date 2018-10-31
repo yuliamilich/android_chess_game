@@ -122,4 +122,118 @@ public class King {
             }
         }
     }
+
+    public boolean isCheck(){
+        int x = this.position / 10;
+        int y = this.position % 10;
+        boolean pieceInTheWay = false;
+
+        boolean check = false;
+
+
+        //threatened by a king
+        // above the king
+        if (x>0) {
+            if (this.figBoard[x - 1][y].getShape().equals("king") && !this.figBoard[x - 1][y].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // beneath the king
+        if(x<7) {
+            if (this.figBoard[x + 1][y].getShape().equals("king") && !this.figBoard[x + 1][y].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // on the right (on my phone)
+        if(y>0) {
+            if (this.figBoard[x][y - 1].getShape().equals("king") && !this.figBoard[x][y - 1].getColor().equals(this.color)) {
+             check = true;
+            }
+        }
+
+        // on the left
+        if(y<7) {
+            if (this.figBoard[x][y + 1].getShape().equals("king") && !this.figBoard[x][y + 1].getColor().equals(this.color)) {
+             check = true;
+            }
+        }
+
+
+        // dawn and left
+        if (x<7 && y<7) {
+            if (this.figBoard[x + 1][y + 1].getShape().equals("king") && (!this.figBoard[x + 1][y + 1].getColor().equals(this.color))) {
+                check = true;
+            }
+        }
+
+        //
+        if(x>0 && y<7) {
+            if (this.figBoard[x - 1][y + 1].getShape().equals("king") && !this.figBoard[x - 1][y + 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        if(x<7 && y>0) {
+            if (this.figBoard[x + 1][y - 1].getShape().equals("king") && !this.figBoard[x + 1][y - 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        if(x>0 && y>0) {
+            if (this.figBoard[x - 1][y - 1].getShape().equals("king") && !this.figBoard[x - 1][y - 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // threatened by a rook or queen
+        pieceInTheWay = false;
+        for (int i = x - 1; i >= 0 && !pieceInTheWay; i--) {
+            if (this.figBoard[i][y].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                pieceInTheWay = true;
+                if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook")) && !this.figBoard[i][y].getColor().equals(this.color)) {
+                    this.board[i][y].setBackgroundResource(R.color.red);
+                    this.board[i][y].setTag("possibleKill");
+                }
+            }
+        }
+
+        pieceInTheWay = false;
+        for (int i = x + 1; i < 8 && !pieceInTheWay; i++) {
+            if (this.figBoard[i][y].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                pieceInTheWay = true;
+                if ((this.figBoard[i][y].getShape().equals("queen") || this.figBoard[i][y].getShape().equals("rook")) && !this.figBoard[i][y].getColor().equals(this.color)) {
+                    check = true;
+                }
+            }
+        }
+        pieceInTheWay = false;
+        for (int i = y - 1; i >= 0 && !pieceInTheWay; i--) {
+            if (this.figBoard[x][i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                pieceInTheWay = true;
+                if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook")) && !this.figBoard[x][i].getColor().equals(this.color)) {
+                    check = true;
+                }
+            }
+        }
+        pieceInTheWay = false;
+        for (int i = y + 1; i < 8 && !pieceInTheWay; i++) {
+            if (this.figBoard[x][i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                pieceInTheWay = true;
+                if ((this.figBoard[x][i].getShape().equals("queen") || this.figBoard[x][i].getShape().equals("rook")) && !this.figBoard[x][i].getColor().equals(this.color)) {
+                    check = true;
+                }
+            }
+        }
+        return check;
+    }
 }

@@ -26,6 +26,8 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     private ImageView[][] fallenFiguresWhite = new ImageView[2][8];
     private ImageView[][] fallenFiguresBlack = new ImageView[2][8];
     private TextView whiteWon, blackWon;
+    private TextView whiteTurn, blackTurn;
+    private TextView checkBlack, checkWhite;
 
 
     @Override
@@ -36,6 +38,12 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         whiteWon = (TextView) findViewById(R.id.whiteWon);
         blackWon = (TextView) findViewById(R.id.blackWon);
 
+        blackTurn = (TextView) findViewById(R.id.waitOrMoveBlack);
+        whiteTurn = (TextView) findViewById(R.id.waitOrMoveWhite);
+
+        checkBlack = (TextView) findViewById(R.id.checkBlack);
+        checkWhite = (TextView) findViewById(R.id.checkWhite);
+
         cM = new ChessManager(this);
 
         createScrollingListsForFallen();
@@ -43,13 +51,19 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         createBoard();
         cM.setBeginningBoard(); // placing the figures in the right place for the beginning of the game
 
-        Button restart = (Button) findViewById(R.id.restart);
+        ImageButton restart = (ImageButton) findViewById(R.id.restart);
         restart.setOnClickListener(this);
+
+        ImageButton restart2 = (ImageButton) findViewById(R.id.restart2);
+        restart2.setOnClickListener(this);
     }
 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.restart:
+                cM.setBeginningBoard();
+                break;
+            case R.id.restart2:
                 cM.setBeginningBoard();
                 break;
 
@@ -82,6 +96,22 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     public TextView getWhiteWon() {
         return whiteWon;
+    }
+
+    public TextView getCheckBlack() {
+        return checkBlack;
+    }
+
+    public TextView getCheckWhite() {
+        return checkWhite;
+    }
+
+    public TextView getBlackTurn() {
+        return blackTurn;
+    }
+
+    public TextView getWhiteTurn() {
+        return whiteTurn;
     }
 
     public void createBoard(){
