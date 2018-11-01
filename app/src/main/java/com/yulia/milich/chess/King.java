@@ -296,6 +296,99 @@ public class King {
                 }
             }
         }
+
+        //threatened by knight
+        if (x>1 && y>0) {
+            if (this.figBoard[x - 2][y-1].getShape().equals("knight") && !this.figBoard[x - 2][y-1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // beneath the king
+        if(x>1 && y<7) {
+            if (this.figBoard[x - 2][y + 1].getShape().equals("knight") && !this.figBoard[x - 2][y + 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // on the right (on my phone)
+        if(x>0 && y>1) {
+            if (this.figBoard[x - 1][y - 2].getShape().equals("knight") && !this.figBoard[x - 1][y - 2].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        // on the left
+        if(x>0 && y<6) {
+            if (this.figBoard[x - 1][y + 2].getShape().equals("knight") && !this.figBoard[x - 1][y + 2].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+
+        // dawn and left
+        if (x<7 && y>1) {
+            if (this.figBoard[x + 1][y - 2].getShape().equals("knight") && !this.figBoard[x + 1][y - 2].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        //
+        if(x<7 && y<6) {
+            if (this.figBoard[x + 1][y + 2].getShape().equals("knight") && !this.figBoard[x + 1][y + 2].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        if(x<6 && y>0) {
+            if (this.figBoard[x + 2][y - 1].getShape().equals("knight") && !this.figBoard[x + 2][y - 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+        if(x<6 && y<7) {
+            if (this.figBoard[x + 2][y + 1].getShape().equals("knight") && !this.figBoard[x + 2][y + 1].getColor().equals(this.color)) {
+                check = true;
+            }
+        }
+
+//        if (x<7 && y<7) {
+//            if (this.figBoard[x + 1][y + 1].getShape().equals("king") && (!this.figBoard[x + 1][y + 1].getColor().equals(this.color))) {
+//                check = true;
+//            }
+//        }
+
+        if (this.color.equals("white")) {
+            //on the sides (only kills)
+            if (x < 7 && y < 7) {
+                if (this.figBoard[x + 1][y + 1].getColor().equals("black") && this.figBoard[x + 1][y + 1].getShape().equals("pawn")) {
+                    check = true;
+                }
+            }
+
+            if (x < 7 && y > 0) {
+                if (this.figBoard[x + 1][y - 1].getColor().equals("black") && this.figBoard[x + 1][y - 1].getShape().equals("pawn")) {
+                    check = true;
+                }
+            }
+        }
+        else {
+            if (this.color.equals("black")) {
+                //on the sides (only kills)
+                if (x > 0 && y < 7) {
+                    if (this.figBoard[x - 1][y + 1].getColor().equals("white") && this.figBoard[x - 1][y + 1].getShape().equals("pawn")) {
+                        check = true;
+                    }
+                }
+
+                if (x > 0 && y > 0) {
+                    if (this.figBoard[x - 1][y - 1].getColor().equals("white") && this.figBoard[x - 1][y - 1].getShape().equals("pawn")) {
+                        check = true;
+                    }
+                }
+            }
+        }
+
         return check;
     }
 }
