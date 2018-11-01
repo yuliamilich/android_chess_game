@@ -23,6 +23,9 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
 
         Button done = (Button) findViewById(R.id.done);
         done.setOnClickListener(this);
+
+        Button newUser = (Button) findViewById(R.id.newUser);
+        newUser.setOnClickListener(this);
     }
 
 
@@ -38,8 +41,9 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra("playerWhiteStr", playerWhiteStr);
                 intent.putExtra("playerBlackStr", playerBlackStr);
                 break;
+            case R.id.newUser:
+                intent = new Intent(this, SignUp.class);
 
-//                sdasidhasoidh
 //            default: finishActivity(1);
 //                finish();
 //                break;

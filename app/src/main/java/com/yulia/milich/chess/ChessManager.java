@@ -265,12 +265,12 @@ public class ChessManager {
         String message = "";
         String title = "";
         if (deadKing.getColor().equals("white")) {
-            title = "Black won!!! :D";
-            message = "White lost!!! :(";
+            title = gA.getBlackName() + " won!!! :D";
+            message = gA.getWhiteName() + " lost!!! :(";
             this.blackWon++;
         } else {
-            title = "White won!!! :D";
-            message = "Black lost!!! :(";
+            title = gA.getWhiteName() + " won!!! :D";
+            message = gA.getBlackName() + " lost!!! :(";
             this.whiteWon++;
         }
         this.gamesPlayed++;

@@ -26,7 +26,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         switch (v.getId())
         {
             case R.id.play:
-                intent = new Intent(this, TheChessGame.class);
+                intent = new Intent(this, AddPlayers.class);
                 break;
 
 //            case R.id.help:

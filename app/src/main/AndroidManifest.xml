@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".AddPlayers" />
-        <activity android:name=".TheChessGame"></activity>
+        <activity android:name=".TheChessGame" />
+        <activity android:name=".SignUp"></activity>
     </application>
 
 </manifest>

@@ -28,12 +28,16 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     private TextView whiteWon, blackWon;
     private TextView whiteTurn, blackTurn;
     private TextView checkBlack, checkWhite;
+    private String whiteName, blackName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_the_chess_game);
+
+        whiteName = (String) getIntent().getStringExtra("playerWhiteStr");
+        blackName = (String) getIntent().getStringExtra("playerBlackStr");
 
         whiteWon = (TextView) findViewById(R.id.whiteWon);
         blackWon = (TextView) findViewById(R.id.blackWon);
@@ -112,6 +116,14 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     public TextView getWhiteTurn() {
         return whiteTurn;
+    }
+
+    public String getBlackName() {
+        return blackName;
+    }
+
+    public String getWhiteName() {
+        return whiteName;
     }
 
     public void createBoard(){
