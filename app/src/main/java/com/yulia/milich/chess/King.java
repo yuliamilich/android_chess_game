@@ -241,6 +241,61 @@ public class King {
                 }
             }
         }
+
+        // threatened by a bishop or queen
+        pieceInTheWay = false;
+        for (int i = 1; (x-i >= 0) && (y+i < 8) && !pieceInTheWay; i++) {
+            if (this.figBoard[x-i][y+i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                if(!this.figBoard[x-i][y+i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x-i][y+i].getShape().equals("queen") || this.figBoard[x-i][y+i].getShape().equals("bishop"))) {
+                        check = true;
+                    }
+                }
+            }
+        }
+
+        pieceInTheWay = false;
+        for (int i = 1; (x+i < 8) && (y+i < 8) && !pieceInTheWay; i++) {
+            if (this.figBoard[x + i][y + i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                if(!this.figBoard[x + i][y + i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x + i][y + i].getShape().equals("queen") || this.figBoard[x + i][y + i].getShape().equals("bishop"))) {
+                        check = true;
+                    }
+                }
+            }
+        }
+        pieceInTheWay = false;
+        for (int i = 1; (x-i >= 0) && (y-i >= 0) && !pieceInTheWay; i++) {
+            if (this.figBoard[x-i][y-i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                if(!this.figBoard[x-i][y-i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x-i][y-i].getShape().equals("queen") || this.figBoard[x-i][y-i].getShape().equals("bishop"))) {
+                        check = true;
+                    }
+                }
+            }
+        }
+        pieceInTheWay = false;
+        for (int i = 1; (x+i < 8) && (y-i >= 0) && !pieceInTheWay; i++) {
+            if (this.figBoard[x+i][y-i].getColor().equals(this.color)) {
+                pieceInTheWay = true;
+            } else {
+                if(!this.figBoard[x+i][y-i].getColor().equals("none")) {
+                    pieceInTheWay = true;
+                    if ((this.figBoard[x+i][y-i].getShape().equals("queen") || this.figBoard[x+i][y-i].getShape().equals("bishop"))) {
+                        check = true;
+                    }
+                }
+            }
+        }
         return check;
     }
 }
