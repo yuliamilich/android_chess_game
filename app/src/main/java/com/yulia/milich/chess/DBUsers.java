@@ -76,16 +76,15 @@ public class DBUsers extends SQLiteOpenHelper {
         return data;
     }
 
-    public void updateName(String newName, int id, String oldName){
+    public void updateName(String newName, int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-                + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'";
 //        Log.d(TAG, "updateName: query: " + query);
 //        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
-    public void updatePassword(String newPassword, int id, String oldPassword){
+    public void updatePassword(String newPassword, int id){
         SQLiteDatabase db = this.getWritableDatabase();
        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -95,7 +94,7 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateGamesPlayed(String newGamesPlayed, int id, String oldPassword){
+    public void updateGamesPlayed(String newGamesPlayed, int id){
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -105,7 +104,7 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateGamesWon(String newGamesWon, int id, String oldPassword){
+    public void updateGamesWon(String newGamesWon, int id){
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -115,7 +114,7 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateManager(String newManager, int id, String oldPassword){
+    public void updateManager(String newManager, int id){
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -145,5 +144,14 @@ public class DBUsers extends SQLiteOpenHelper {
 //            updateID(c.getColumnIndex("_id"), c.getColumnIndex("_id")+1);
 //            c.moveToNext();
 //        }
+    }
+
+    public void update(int id, int newId, String newName, String newPassword, String newGamesPlayed, String newGamesWon, String newManager){
+        updateID(id, newId);
+        updateName(newName, id);
+        updatePassword(newPassword, id);
+        updateGamesPlayed(newGamesPlayed, id);
+        updateGamesWon(newGamesWon,id);
+        updateManager(newManager, id);
     }
 }

@@ -46,6 +46,9 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         Button delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(this);
 
+        Button update = (Button) findViewById(R.id.update);
+        update.setOnClickListener(this);
+
         edId = (EditText) findViewById(R.id.id);
         edName = (EditText) findViewById(R.id.name);
         edPassword = (EditText) findViewById(R.id.password);
@@ -90,6 +93,8 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                 String name = adp.getItem(position).toString();
 
                 Cursor data = users.getItemID(name);
+
+
                 int itemID = -1;
                 while(data.moveToNext()){
                     itemID = data.getInt(0);
@@ -104,6 +109,27 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
 
                     Toast toast1 = Toast.makeText(context, text1, duration);
                     toast1.show();
+
+                    int idColIndexx = data.getColumnIndex("_id");
+                    int nameColIndexx = data.getColumnIndex("name");
+                    int passwordColIndexx = data.getColumnIndex("password");
+                    int gamesPlayedColIndexx = data.getColumnIndex("games_played");
+                    int gamesWonColIndexx = data.getColumnIndex("games_won");
+                    int managerColIndexx = data.getColumnIndex("manager");
+
+                    String sid = data.getString((idColIndexx));
+                    String sname = data.getString(nameColIndexx);
+                    String spassword = data.getString(passwordColIndexx);
+                    int sgamesPlayed = data.getInt(gamesPlayedColIndexx);
+                    int sgamesWon = data.getInt(gamesWonColIndexx);
+                    String smanager = data.getString(managerColIndexx);
+
+                    edId.setText(sid);
+                    edName.setText(sname);
+                    edPassword.setText(spassword);
+                    edGamesPlayed.setText(sgamesPlayed);
+                    edGamesWon.setText(sgamesWon);
+                    edManager.setText(smanager);
                 }
                 else {
                     Context context = getApplicationContext();
@@ -189,6 +215,17 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                 intent = new Intent(this, SignUp.class);
                 startActivity(intent);
                 break;
+            case R.id.update:
+                if(idOfUser != -1) {
+                    String sID = edId.getText().toString();
+                    String sName = edName.getText().toString();
+                    String sPassword = edPassword.getText().toString();
+                    String sGamesPlayed = edGamesPlayed.getText().toString();
+                    String sGamesWon = edGamesWon.getText().toString();
+                    String sManager = edManager.getText().toString();
+                    users.update(idOfUser, Integer.parseInt(sID), sName, sPassword, sGamesPlayed, sGamesWon, sManager);
+                }
+
 
 //            default: finishActivity(1);
 //                finish();
