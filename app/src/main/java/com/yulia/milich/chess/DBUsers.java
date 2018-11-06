@@ -2,8 +2,10 @@ package com.yulia.milich.chess;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DBUsers extends SQLiteOpenHelper {
@@ -67,4 +69,81 @@ public class DBUsers extends SQLiteOpenHelper {
 
     }
 
+    public Cursor getItemID(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + UID + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }
+
+    public void updateName(String newName, int id, String oldName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+                + NAME + " = '" + oldName + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updatePassword(String newPassword, int id, String oldPassword){
+        SQLiteDatabase db = this.getWritableDatabase();
+       //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //       + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = '" + newPassword + "' WHERE " + UID + " = '" + id + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateGamesPlayed(String newGamesPlayed, int id, String oldPassword){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //       + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + GAMESPLAYED + " = '" + newGamesPlayed+ "' WHERE " + UID + " = '" + id + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateGamesWon(String newGamesWon, int id, String oldPassword){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //       + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + GAMESWON + " = '" + newGamesWon + "' WHERE " + UID + " = '" + id + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateManager(String newManager, int id, String oldPassword){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //       + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + MANAGER + " = '" + newManager + "' WHERE " + UID + " = '" + id + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateID(int id, int newID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + UID + " = '" + newID + "' WHERE " + UID + " = '" + id + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void deleteName(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + UID + " = '" + id + "'";
+              //  + " AND " + NAME + " = '" + name + "'";
+        db.execSQL(query);
+
+//        Cursor c = db.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+//        c.moveToPosition(id);
+//        while (!c.isAfterLast()) {
+//            updateID(c.getColumnIndex("_id"), c.getColumnIndex("_id")+1);
+//            c.moveToNext();
+//        }
+    }
 }
