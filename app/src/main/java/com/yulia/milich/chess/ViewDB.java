@@ -56,6 +56,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         edGamesWon = (EditText) findViewById(R.id.gamesWon);
         edManager = (EditText) findViewById(R.id.manager);
 
+
         read_fromDC();
         //table_close();
 
@@ -110,6 +111,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                     Toast toast1 = Toast.makeText(context, text1, duration);
                     toast1.show();
 
+                    data.moveToPosition(position+1);
                     int idColIndexx = data.getColumnIndex("_id");
                     int nameColIndexx = data.getColumnIndex("name");
                     int passwordColIndexx = data.getColumnIndex("password");
