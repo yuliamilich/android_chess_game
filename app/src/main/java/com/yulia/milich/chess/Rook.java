@@ -72,4 +72,9 @@ public class Rook {
             }
         }
     }
+
+    public Shape[][] move(Shape[][] figBoard){
+
+        return figBoard;
+    }
 }
