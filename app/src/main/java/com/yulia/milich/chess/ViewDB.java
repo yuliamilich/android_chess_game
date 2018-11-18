@@ -67,12 +67,12 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            int idColIndex = c.getColumnIndex("_id");
-            int nameColIndex = c.getColumnIndex("name");
-            int passwordColIndex = c.getColumnIndex("password");
-            int gamesPlayedColIndex = c.getColumnIndex("games_played");
-            int gamesWonColIndex = c.getColumnIndex("games_won");
-            int managerColIndex = c.getColumnIndex("manager");
+            int idColIndex = c.getColumnIndex(users.UID);
+            int nameColIndex = c.getColumnIndex(users.NAME);
+            int passwordColIndex = c.getColumnIndex(users.PASSWORD);
+            int gamesPlayedColIndex = c.getColumnIndex(users.GAMESPLAYED);
+            int gamesWonColIndex = c.getColumnIndex(users.GAMESWON);
+            int managerColIndex = c.getColumnIndex(users.MANAGER);
 
             String id = c.getString((idColIndex));
             String name = c.getString(nameColIndex);
@@ -95,43 +95,42 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
 
                 Cursor data = users.getItemID(name);
 
-
                 int itemID = -1;
+                String password = "";
+                int gamesPlayed = -1;
+                int gamesWon = -1;
+                String manager = "";
                 while(data.moveToNext()){
+                    int idColIndexx = data.getColumnIndex(users.UID);
+                    int nameColIndexx = data.getColumnIndex(users.NAME);
+                    int passwordColIndexx = data.getColumnIndex(users.PASSWORD);
+                    int gamesPlayedColIndexx = data.getColumnIndex(users.GAMESPLAYED);
+                    int gamesWonColIndexx = data.getColumnIndex(users.GAMESWON);
+                    int managerColIndexx = data.getColumnIndex(users.MANAGER);
+
                     itemID = data.getInt(0);
+                    password = data.getString(passwordColIndexx);
+                    gamesPlayed = data.getInt(gamesPlayedColIndexx);
+                    gamesWon = data.getInt(gamesWonColIndexx);
+                    manager = data.getString(managerColIndexx);
+
                 }
                 if(itemID > -1){
                     //what i want to do with the user
                     Context context = getApplicationContext();
                     CharSequence text1 = "id found " + itemID;
                     idOfUser = itemID;
-//                    CharSequence text1 = "id found ";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast1 = Toast.makeText(context, text1, duration);
                     toast1.show();
 
-                    data.moveToPosition(position+1);
-                    int idColIndexx = data.getColumnIndex("_id");
-                    int nameColIndexx = data.getColumnIndex("name");
-                    int passwordColIndexx = data.getColumnIndex("password");
-                    int gamesPlayedColIndexx = data.getColumnIndex("games_played");
-                    int gamesWonColIndexx = data.getColumnIndex("games_won");
-                    int managerColIndexx = data.getColumnIndex("manager");
-
-                    String sid = data.getString((idColIndexx));
-                    String sname = data.getString(nameColIndexx);
-                    String spassword = data.getString(passwordColIndexx);
-                    int sgamesPlayed = data.getInt(gamesPlayedColIndexx);
-                    int sgamesWon = data.getInt(gamesWonColIndexx);
-                    String smanager = data.getString(managerColIndexx);
-
-                    edId.setText(sid);
-                    edName.setText(sname);
-                    edPassword.setText(spassword);
-                    edGamesPlayed.setText(sgamesPlayed);
-                    edGamesWon.setText(sgamesWon);
-                    edManager.setText(smanager);
+                    edId.setText(String.valueOf(itemID));
+                    edName.setText(name);
+                    edPassword.setText(password);
+                    edGamesPlayed.setText(String.valueOf(gamesPlayed));
+                    edGamesWon.setText(String.valueOf(gamesWon));
+                    edManager.setText(manager);
                 }
                 else {
                     Context context = getApplicationContext();

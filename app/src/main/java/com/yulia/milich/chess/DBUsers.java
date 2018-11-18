@@ -71,7 +71,7 @@ public class DBUsers extends SQLiteOpenHelper {
 
     public Cursor getItemID(String name){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + UID + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
+        String query = "SELECT " + UID + ", " + NAME + ", " + PASSWORD +  ", " + GAMESPLAYED +  ", " + GAMESWON +  ", " + MANAGER + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
         Cursor data = db.rawQuery(query,null);
         return data;
     }
