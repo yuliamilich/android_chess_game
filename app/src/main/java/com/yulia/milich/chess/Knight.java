@@ -2,123 +2,98 @@ package com.yulia.milich.chess;
 
 import android.widget.ImageButton;
 
-public class Knight {
-    private String color;
-    private ImageButton[][] board;
-    private Figure[][] figBoard;
-    private int position;
+public class Knight extends Figure{
 
-    public Knight(String color, ImageButton[][] board, Figure[][] figBoard, int position){
-        this.color = color;
-        this.board = board;
-        this.figBoard = figBoard;
-        this.position = position;
+    public Knight(String color, int position, int imageResource) {
+        super(color, position, imageResource);
     }
 
-    public void showOptions() {
-//        boolean pieceInTheWay = false;
+    @Override
+    public String getShape() {
+        return "knight";
+    }
+
+    public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         int x = this.position / 10;
         int y = this.position % 10;
 
-        // above the king
         if (x>1 && y>0) {
-            if (this.figBoard[x - 2][y-1].getShape().equals("none")) {
-                board[x - 2][y-1].setBackgroundResource(R.color.green);
-                board[x - 2][y-1].setTag("possibleMove");
+            if (!board[x - 2][y-1]) {
+                move[x - 2][y-1] = "possible move";
             } else {
-                board[x - 2][y-1].setBackgroundResource(R.color.red);
-                this.board[x - 2][y-1].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x - 2][y-1].getColor().equals(this.color)) {
+                    move[x - 2][y-1] = "possible kill";
+                }
             }
         }
 
-//        pieceInTheWay = false;
-
-        // beneath the king
-        if(x>1 && y<7) {
-            if (this.figBoard[x - 2][y + 1].getShape().equals("none")) {
-                board[x - 2][y + 1].setBackgroundResource(R.color.green);
-                board[x - 2][y + 1].setTag("possibleMove");
+        if (x>1 && y<7) {
+            if (!board[x - 2][y + 1]) {
+                move[x - 2][y + 1] = "possible move";
             } else {
-                board[x - 2][y + 1].setBackgroundResource(R.color.red);
-                this.board[x - 2][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x - 2][y + 1].getColor().equals(this.color)) {
+                    move[x - 2][y + 1] = "possible kill";
+                }
             }
         }
 
-//        pieceInTheWay = false;
-
-        // on the right (on my phone)
-        if(x>0 && y>1) {
-            if (this.figBoard[x - 1][y - 2].getShape().equals("none")) {
-                board[x - 1][y - 2].setBackgroundResource(R.color.green);
-                board[x - 1][y - 2].setTag("possibleMove");
+        if (x>0 && y>1) {
+            if (!board[x - 1][y - 2]) {
+                move[x - 1][y - 2] = "possible move";
             } else {
-                board[x - 1][y - 2].setBackgroundResource(R.color.red);
-                this.board[x - 1][y - 2].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x - 1][y - 2].getColor().equals(this.color)) {
+                    move[x - 1][y - 2] = "possible kill";
+                }
             }
         }
 
-//        pieceInTheWay = false;
-
-
-        // on the left
-        if(x>0 && y<6) {
-            if (this.figBoard[x - 1][y + 2].getShape().equals("none")) {
-                board[x - 1][y + 2].setBackgroundResource(R.color.green);
-                board[x - 1][y + 2].setTag("possibleMove");
+        if (x>0 && y<6) {
+            if (!board[x - 1][y + 2]) {
+                move[x - 1][y + 2] = "possible move";
             } else {
-                board[x - 1][y + 2].setBackgroundResource(R.color.red);
-                this.board[x - 1][y + 2].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x - 1][y + 2].getColor().equals(this.color)) {
+                    move[x - 1][y + 2] = "possible kill";
+                }
             }
         }
 
-
-        // dawn and left
         if (x<7 && y>1) {
-            if (this.figBoard[x + 1][y - 2].getShape().equals("none")) {
-                board[x + 1][y - 2].setBackgroundResource(R.color.green);
-                board[x + 1][y - 2].setTag("possibleMove");
+            if (!board[x + 1][y - 2]) {
+                move[x + 1][y - 2] = "possible move";
             } else {
-                board[x + 1][y - 2].setBackgroundResource(R.color.red);
-                this.board[x + 1][y - 2].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x + 1][y - 2].getColor().equals(this.color)) {
+                    move[x + 1][y - 2] = "possible kill";
+                }
             }
         }
 
-        //
-        if(x<7 && y<6) {
-            if (this.figBoard[x + 1][y + 2].getShape().equals("none")) {
-                board[x + 1][y + 2].setBackgroundResource(R.color.green);
-                board[x + 1][y + 2].setTag("possibleMove");
+        if (x<7 && y<6) {
+            if (!board[x + 1][y + 2]) {
+                move[x + 1][y + 2] = "possible move";
             } else {
-                board[x + 1][y + 2].setBackgroundResource(R.color.red);
-                this.board[x + 1][y + 2].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x + 1][y + 2].getColor().equals(this.color)) {
+                    move[x + 1][y + 2] = "possible kill";
+                }
             }
         }
 
-        if(x<6 && y>0) {
-            if (this.figBoard[x + 2][y - 1].getShape().equals("none")) {
-                board[x + 2][y - 1].setBackgroundResource(R.color.green);
-                board[x + 2][y - 1].setTag("possibleMove");
+        if (x<6 && y>0) {
+            if (!board[x + 2][y - 1]) {
+                move[x + 2][y - 1] = "possible move";
             } else {
-                board[x + 2][y - 1].setBackgroundResource(R.color.red);
-                this.board[x + 2][y - 1].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x + 2][y - 1].getColor().equals(this.color)) {
+                    move[x + 2][y - 1] = "possible kill";
+                }
             }
         }
 
-        if(x<6 && y<7) {
-            if (this.figBoard[x + 2][y + 1].getShape().equals("none")) {
-                board[x + 2][y + 1].setBackgroundResource(R.color.green);
-                board[x + 2][y + 1].setTag("possibleMove");
+        if (x<6 && y<7) {
+            if (!board[x + 2][y + 1]) {
+                move[x + 2][y + 1] = "possible move";
             } else {
-                board[x + 2][y + 1].setBackgroundResource(R.color.red);
-                this.board[x + 2][y + 1].setTag("possibleKill");
-//            pieceInTheWay = true;
+                if (!figBoard[x + 2][y + 1].getColor().equals(this.color)) {
+                    move[x + 2][y + 1] = "possible kill";
+                }
             }
         }
     }
