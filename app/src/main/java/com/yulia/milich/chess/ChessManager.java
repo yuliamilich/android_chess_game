@@ -16,9 +16,13 @@ public class ChessManager {
             R.mipmap.king_black, R.mipmap.queen_black, R.mipmap.bishop_black,
             R.mipmap.knight_black, R.mipmap.rook_black, R.mipmap.pawn_black};
     private String[] figs = {"rook", "knight", "bishop", "king", "queen", "bishop", "knight", "rook", "pawn"};
+
     private TheChessGame gA;
+    private String[][] strBoard = new String[8][8];
+    private boolean[][] booleanBoard = new boolean[8][8];
     private Figure[][] figBoard = new Figure[8][8];
-    private Figure theMovedFigure = new Figure("none", "none", 0);
+
+    //private Figure theMovedFigure = new Figure("none", "none", 0);
     private ArrayList<Figure> fallenFiguresWhite;
     private ArrayList<Figure> fallenFiguresBlack;
     private int numberOfWhiteFallen;
@@ -34,6 +38,8 @@ public class ChessManager {
 
 // it starts the game over (setting the board to look like in the beginning.
     public void setBeginningBoard(){
+        clearBooleanBoard();
+
         for (int i=0; i<gA.getBoard().length; i++){
             gA.getBoard()[0][i].setImageResource(white[i]);
             gA.getBoard()[0][i].setRotation(180);
