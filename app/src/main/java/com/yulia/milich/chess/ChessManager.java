@@ -216,6 +216,9 @@ public class ChessManager {
         int y = newPosition % 10;
 
         if (strBoard[x][y].equals("possible move") || strBoard[x][y].equals("possible kill")) {
+            if(strBoard[x][y].equals("possible kill")){
+                AddFallenPictureToScrollView(figBoard[x][y]);
+            }
             moveFromTo(this.lastPosition, newPosition);
         } else {
             clearBoardBackground();
