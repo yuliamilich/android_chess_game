@@ -1,5 +1,6 @@
 package com.yulia.milich.chess;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,10 +28,17 @@ public class ChessManager {
     private int numberOfWhiteFallen;
     private int numberOfBlackFallen;
 
+    private int whiteWon = 0;
+    private int blackWon = 0;
+    private int gamesPlayed = 0;
+
     private int turn;
     private int beginner = 0;
 
     private int lastPosition;
+
+    private King whiteKing = new King("white", 0, white[3]);
+    private King blackKing = new King("black", 0, black[3]);
 
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
@@ -80,9 +88,12 @@ public class ChessManager {
             figBoard[6][i] = new Pawn("black", 60 + i, black[8]);
         }
 
+        clearFallenFigures();
         clearBoardBackground();
         clearStringBoard();
         showBoard();
+        showTurn();
+        showScore();
 
         if (beginner % 2 == 0)
             this.turn = 0;
@@ -99,13 +110,13 @@ public class ChessManager {
         fallenFiguresBlack = new ArrayList<Figure>();
     }
 
-    public void clearTags() {
-        for (int i = 0; i < gA.getBoard().length; i++) {
-            for (int j = 0; j < gA.getBoard().length; j++) {
-                gA.getBoard()[i][j].setTag("");
-            }
-        }
-    }
+//    public void clearTags() {
+//        for (int i = 0; i < gA.getBoard().length; i++) {
+//            for (int j = 0; j < gA.getBoard().length; j++) {
+//                gA.getBoard()[i][j].setTag("");
+//            }
+//        }
+//    }
 
     public void clearBoardBackground() {
         for (int i = 0; i < gA.getBoard().length; i++) {
@@ -131,6 +142,15 @@ public class ChessManager {
         for (int i = 0; i < strBoard.length; i++) {
             for (int j = 0; j < strBoard.length; j++) {
                 strBoard[i][j] = "";
+            }
+        }
+    }
+
+    public void clearFallenFigures() {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 8; j++) {
+                gA.getFallenFiguresWhite()[i][j].setImageResource(0);
+                gA.getFallenFiguresBlack()[i][j].setImageResource(0);
             }
         }
     }
@@ -220,6 +240,12 @@ public class ChessManager {
                 AddFallenPictureToScrollView(figBoard[x][y]);
             }
             moveFromTo(this.lastPosition, newPosition);
+            if(figBoard[x][y].getShape().equals("king")) {
+                if (figBoard[x][y].getColor().equals("white"))
+                    whiteKing.setPosition(newPosition);
+                else blackKing.setPosition(newPosition);
+                showCheck();
+            }
         } else {
             clearBoardBackground();
             clearStringBoard();
@@ -309,8 +335,72 @@ public class ChessManager {
     public void AddFallenPictureToScrollView(Figure figure) {
         if (figure.getColor().equals("white")) {
             gA.getFallenFiguresWhite()[numberOfWhiteFallen / 8][numberOfWhiteFallen % 8].setImageResource(figure.getImageResource());
+            fallenFiguresWhite.add(figure);
+            numberOfWhiteFallen++;
         } else {
             gA.getFallenFiguresBlack()[numberOfBlackFallen / 8][numberOfBlackFallen % 8].setImageResource(figure.getImageResource());
+            fallenFiguresBlack.add(figure);
+            numberOfBlackFallen++;
+        }
+        if (figure.getShape().equals("king")) {
+            winner(figure);
+        }
+    }
+
+    public void winner(Figure deadKing) {
+        String message = "";
+        String title = "";
+        if (deadKing.getColor().equals("white")) {
+            title = "Black won!!! :D";
+            message = "White lost!!! :(";
+            this.blackWon++;
+        } else {
+            title = "White won!!! :D";
+            message = "Black lost!!! :(";
+            this.whiteWon++;
+        }
+        this.gamesPlayed++;
+        showScore();
+        gA.winner(title, message);
+        setBoardUnClickable();
+    }
+
+    public void reset() {
+        this.whiteWon = 0;
+        this.blackWon = 0;
+        this.gamesPlayed = 0;
+    }
+
+    public void showScore() {
+        gA.getBlackWon().setText("You won: " + this.blackWon + "/" + this.gamesPlayed);
+        gA.getWhiteWon().setText("You won: " + this.whiteWon + "/" + this.gamesPlayed);
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void showTurn() {
+        if (turn % 2 == 0) {
+            gA.getBlackTurn().setText("Wait");
+            gA.getBlackTurn().setTextColor(R.color.darkPurple);
+            gA.getWhiteTurn().setText("Your turn");
+            gA.getWhiteTurn().setTextColor(R.color.darkGreen);
+        } else {
+            gA.getBlackTurn().setText("Your turn");
+            gA.getBlackTurn().setTextColor(R.color.darkGreen);
+            gA.getWhiteTurn().setText("Wait");
+            gA.getWhiteTurn().setTextColor(R.color.darkPurple);
+        }
+    }
+
+    public void showCheck() {
+        if (whiteKing.isCheck(figBoard, booleanBoard, strBoard)) {
+            gA.getCheckWhite().setText("Check");
+        } else {
+            gA.getCheckWhite().setText("");
+        }
+        if (blackKing.isCheck(figBoard, booleanBoard, strBoard)) {
+            gA.getCheckBlack().setText("Check");
+        } else {
+            gA.getCheckBlack().setText("");
         }
     }
 
