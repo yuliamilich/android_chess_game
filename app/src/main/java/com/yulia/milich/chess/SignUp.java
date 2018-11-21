@@ -36,7 +36,16 @@ public class SignUp extends AppCompatActivity {
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
         isManager = checkBox.isChecked();
 
-        final Intent intent = new Intent(this, AddPlayers.class);
+        Intent i = null;
+
+        if(getIntent().getStringExtra("from").equals("AddPlayers")){
+            i = new Intent(this, AddPlayers.class);
+        }
+        else if(getIntent().getStringExtra("from").equals("ViewDB")){
+            i = new Intent(this, ViewDB.class);
+        }
+
+        final Intent intent = i;
 
         Button done = (Button) findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +55,7 @@ public class SignUp extends AppCompatActivity {
                 table_close();
 
                 startActivity(intent);
+                finish();
             }
         });
     }

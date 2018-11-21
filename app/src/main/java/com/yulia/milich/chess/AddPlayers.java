@@ -43,6 +43,7 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);
+                intent.putExtra("from", "AddPlayers");
 
 //            default: finishActivity(1);
 //                finish();

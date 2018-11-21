@@ -214,6 +214,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);
+                intent.putExtra("from", "ViewDB");
                 startActivity(intent);
                 break;
             case R.id.update:
