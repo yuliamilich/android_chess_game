@@ -72,14 +72,15 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
                 break;
 
             default:
-
-                if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
-                    cM.moveFromTo(this.lastPosition, v.getId());
-                }
-                else{
-                    cM.showOptions((ImageButton) v);
-                    this.lastPosition = v.getId();
-                }
+                cM.click(v.getId());
+//
+//                if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
+//                    cM.moveFromTo(this.lastPosition, v.getId());
+//                }
+//                else{
+//                    cM.showOptions((ImageButton) v);
+//                    this.lastPosition = v.getId();
+//                }
         }
     }
 
@@ -159,7 +160,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         }
         cM.clearBoardBackground();
 
-        cM.reset();
+        cM.setBeginningBoard();
     }
 
     public void createScrollingListsForFallen(){

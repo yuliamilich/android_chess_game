@@ -21,11 +21,14 @@ public class ChessManager {
     private boolean[][] booleanBoard = new boolean[8][8];
     private Figure[][] figBoard = new Figure[8][8];
 
-    private Figure theMovedFigure = new Figure("none", "none", 0);
+    //private Figure theMovedFigure = new Figure("none", "none", 0);
     private ArrayList<Figure> fallenFiguresWhite;
     private ArrayList<Figure> fallenFiguresBlack;
     private int numberOfWhiteFallen;
     private int numberOfBlackFallen;
+
+    private int turn;
+    private int beginner = 0;
 
     private int lastPosition;
 
@@ -42,31 +45,54 @@ public class ChessManager {
         figBoard[0][2] = new Bishop("white", 02, white[2]);
         figBoard[0][3] = new King("white", 03, white[3]);
         figBoard[0][4] = new Queen("white", 04, white[4]);
+        figBoard[0][5] = new Bishop("white", 05, white[2]);
+        figBoard[0][6] = new Knight("white", 06, white[1]);
+        figBoard[0][7] = new Rook("white", 07, white[0]);
 
         for (int i = 0; i < gA.getBoard().length; i++) {
-            gA.getBoard()[0][i].setImageResource(white[i]);
+            booleanBoard[0][i] = true;
             gA.getBoard()[0][i].setRotation(180);
-            figBoard[0][i] = new Figure(figs[i], "white", white[i]);
         }
+
         for (int i = 0; i < gA.getBoard().length; i++) {
-            gA.getBoard()[1][i].setImageResource(white[8]);
+            booleanBoard[1][i] = true;
             gA.getBoard()[1][i].setRotation(180);
-            figBoard[1][i] = new Figure(figs[8], "white", white[8]);
+            figBoard[1][i] = new Pawn("white", 10 + i, white[8]);
         }
+
+        figBoard[7][0] = new Rook("black", 70, white[0]);
+        figBoard[7][1] = new Knight("black", 71, white[1]);
+        figBoard[7][2] = new Bishop("black", 72, white[2]);
+        figBoard[7][3] = new King("black", 73, white[3]);
+        figBoard[7][4] = new Queen("black", 74, white[4]);
+        figBoard[7][5] = new Bishop("black", 75, white[2]);
+        figBoard[7][6] = new Knight("black", 76, white[1]);
+        figBoard[7][7] = new Rook("black", 77, white[0]);
+
         for (int i = 0; i < gA.getBoard().length; i++) {
-            gA.getBoard()[6][i].setImageResource(black[8]);
-            figBoard[6][i] = new Figure(figs[8], "black", black[8]);
+            booleanBoard[7][i] = true;
+            gA.getBoard()[7][i].setRotation(0);
         }
+
         for (int i = 0; i < gA.getBoard().length; i++) {
-            gA.getBoard()[7][i].setImageResource(black[i]);
-            figBoard[7][i] = new Figure(figs[i], "black", black[i]);
+            booleanBoard[6][i] = true;
+            gA.getBoard()[6][i].setRotation(0);
+            figBoard[6][i] = new Pawn("black", 60 + i, black[8]);
         }
-        for (int j = 2; j < 6; j++) {
-            for (int i = 0; i < gA.getBoard().length; i++) {
-                figBoard[j][i] = new Figure("none", "none", 0);
-            }
-        }
-        clearTags();
+
+        clearBoardBackground();
+        clearStringBoard();
+        showBoard();
+
+        if (beginner % 2 == 0)
+            this.turn = 0;
+        else this.turn = 1;
+
+        setBoardClickable();
+//        showScore();
+//        showTurn();
+        beginner++;
+
         numberOfBlackFallen = 0;
         numberOfWhiteFallen = 0;
         fallenFiguresWhite = new ArrayList<Figure>();
@@ -105,6 +131,24 @@ public class ChessManager {
         for (int i = 0; i < strBoard.length; i++) {
             for (int j = 0; j < strBoard.length; j++) {
                 strBoard[i][j] = "";
+            }
+        }
+    }
+
+    public void setBoardClickable() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                //if (booleanBoard[i][j])
+                gA.getBoard()[i][j].setClickable(true);
+            }
+        }
+    }
+
+    public void setBoardUnClickable() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (booleanBoard[i][j])
+                    gA.getBoard()[i][j].setClickable(false);
             }
         }
     }
