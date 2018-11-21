@@ -72,6 +72,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
                 break;
 
             default:
+
                 if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
                     cM.moveFromTo(this.lastPosition, v.getId());
                 }
