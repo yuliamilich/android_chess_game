@@ -1,7 +1,9 @@
 package com.yulia.milich.chess;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -14,67 +16,70 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 public class TheChessGame extends AppCompatActivity implements View.OnClickListener{
 
     private ImageButton board[][] = new ImageButton[8][8];
-    private TableRow rows[] = new TableRow[8];
-//    private boolean oneClick = true;
-//    private ImageButton helpButton;
     private ChessManager cM;
     private int lastPosition;
     private ImageView[][] fallenFiguresWhite = new ImageView[2][8];
     private ImageView[][] fallenFiguresBlack = new ImageView[2][8];
-    private TableRow rowWhite[] = new TableRow[2];
-    private TableRow rowBlack[] = new TableRow[2];
+    private TextView whiteWon, blackWon;
+    private TextView whiteTurn, blackTurn;
+    private TextView checkBlack, checkWhite;
+    private String whiteName, blackName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_the_chess_game);
 
+        whiteName = (String) getIntent().getStringExtra("playerWhiteStr");
+        blackName = (String) getIntent().getStringExtra("playerBlackStr");
+
+        whiteWon = (TextView) findViewById(R.id.whiteWon);
+        blackWon = (TextView) findViewById(R.id.blackWon);
+
+        blackTurn = (TextView) findViewById(R.id.waitOrMoveBlack);
+        whiteTurn = (TextView) findViewById(R.id.waitOrMoveWhite);
+
+        checkBlack = (TextView) findViewById(R.id.checkBlack);
+        checkWhite = (TextView) findViewById(R.id.checkWhite);
+
         cM = new ChessManager(this);
+
+        createScrollingListsForFallen();
 
         createBoard();
         cM.setBeginningBoard(); // placing the figures in the right place for the beginning of the game
 
-        createScrollingListsForFallen();
+        ImageButton restart = (ImageButton) findViewById(R.id.restart);
+        restart.setOnClickListener(this);
 
-
+        ImageButton restart2 = (ImageButton) findViewById(R.id.restart2);
+        restart2.setOnClickListener(this);
     }
 
     public void onClick(View v) {
         switch (v.getId()){
-//            case 44:
-//                break;
+            case R.id.restart:
+                cM.setBeginningBoard();
+                break;
+            case R.id.restart2:
+                cM.setBeginningBoard();
+                break;
+
             default:
-//                if (oneClick){
-//                    //oneClick =false;
-////                    helpButton = (ImageButton) v;
-//                    cM.showOptions((ImageButton) v);
-//
-//                }
-                if(v.getTag().equals("possibleMove")){
-                    cM.moveToEmptyPlaceFromAGivenPlace(this.lastPosition, v.getId());
-                }
-                else if(v.getTag().equals("possibleKill")){
-                    cM.moveToKillFromAGivenPlace(this.lastPosition, v.getId());
+                if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
+                    cM.moveFromTo(this.lastPosition, v.getId());
                 }
                 else{
                     cM.showOptions((ImageButton) v);
                     this.lastPosition = v.getId();
                 }
         }
-//        switch (v.getTag())
-//        {
-//            case R.mipmap.rook_white:
-//                Rook figure = new Rook("white");
-//                break;
-//            case "king_white":
-//                King figure = new King("white");
-//                break;
-//
-//        }
     }
 
     public ImageButton[][] getBoard(){
@@ -89,8 +94,41 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         return fallenFiguresWhite;
     }
 
+    public TextView getBlackWon() {
+        return blackWon;
+    }
+
+    public TextView getWhiteWon() {
+        return whiteWon;
+    }
+
+    public TextView getCheckBlack() {
+        return checkBlack;
+    }
+
+    public TextView getCheckWhite() {
+        return checkWhite;
+    }
+
+    public TextView getBlackTurn() {
+        return blackTurn;
+    }
+
+    public TextView getWhiteTurn() {
+        return whiteTurn;
+    }
+
+    public String getBlackName() {
+        return blackName;
+    }
+
+    public String getWhiteName() {
+        return whiteName;
+    }
+
     public void createBoard(){
         TableLayout l1 = (TableLayout) findViewById(R.id.chessBoard);
+        TableRow rows[] = new TableRow[8];
 
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
@@ -119,14 +157,16 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             l1.addView(rows[i]);
         }
         cM.clearBoardBackground();
+
+        cM.reset();
     }
 
     public void createScrollingListsForFallen(){
         TableLayout fallenBlack = (TableLayout) findViewById(R.id.fallenBlack);
         TableLayout fallenWhite = (TableLayout) findViewById(R.id.fallenWhite);
 
-//        TableRow rowWhite[] = new TableRow[2];
-//        TableRow rowBlack[] = new TableRow[2];
+        TableRow rowWhite[] = new TableRow[2];
+        TableRow rowBlack[] = new TableRow[2];
 
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
@@ -138,6 +178,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
                 this.fallenFiguresWhite[i][j] = new ImageView(this);
                 this.fallenFiguresBlack[i][j] = new ImageView(this);
 
+                //i don't think this is useful
                 this.fallenFiguresWhite[i][j].setId(100+i*10 + j);
                 this.fallenFiguresBlack[i][j].setId(200+i*10 + j);
 
@@ -153,5 +194,21 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             fallenWhite.addView(rowWhite[i]);
             fallenBlack.addView(rowBlack[i]);
         }
+    }
+
+    public void winner(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TheChessGame.this);
+
+        builder.setCancelable(true);
+        builder.setTitle(title);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setMessage(message);
+        builder.show();
     }
 }
