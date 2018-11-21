@@ -182,7 +182,7 @@ public class King extends Figure {
             for (int i = x - 1; i >= 0 && !pieceInTheWay; i--) {
                 if (board[i][y]) {
                     pieceInTheWay = true;
-                    if ((figBoard[i][y].getShape().equals("queen") || figBoard[i][y].getShape().equals("rook"))) {
+                    if ((figBoard[i][y].getShape().equals("queen") || figBoard[i][y].getShape().equals("rook")) && !figBoard[i][y].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -192,7 +192,8 @@ public class King extends Figure {
             for (int i = x + 1; i < 8 && !pieceInTheWay; i++) {
                 if (board[i][y]) {
                     pieceInTheWay = true;
-                    if ((figBoard[i][y].getShape().equals("queen") || figBoard[i][y].getShape().equals("rook"))) {
+                    if ((figBoard[i][y].getShape().equals("queen") || figBoard[i][y].getShape().equals("rook"))
+                            && !figBoard[i][y].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -201,7 +202,8 @@ public class King extends Figure {
             for (int i = y - 1; i >= 0 && !pieceInTheWay; i--) {
                 if (board[x][i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x][i].getShape().equals("queen") || figBoard[x][i].getShape().equals("rook"))) {
+                    if ((figBoard[x][i].getShape().equals("queen") || figBoard[x][i].getShape().equals("rook"))
+                            && !figBoard[x][i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -210,7 +212,8 @@ public class King extends Figure {
             for (int i = y + 1; i < 8 && !pieceInTheWay; i++) {
                 if (board[x][i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x][i].getShape().equals("queen") || figBoard[x][i].getShape().equals("rook"))) {
+                    if ((figBoard[x][i].getShape().equals("queen") || figBoard[x][i].getShape().equals("rook"))
+                            && !figBoard[x][i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -221,7 +224,8 @@ public class King extends Figure {
             for (int i = 1; (x - i >= 0) && (y + i < 8) && !pieceInTheWay; i++) {
                 if (board[x - i][y + i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x - i][y + i].getShape().equals("queen") || figBoard[x - i][y + i].getShape().equals("bishop"))) {
+                    if ((figBoard[x - i][y + i].getShape().equals("queen") || figBoard[x - i][y + i].getShape().equals("bishop"))
+                            && !figBoard[x - i][y + i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -231,7 +235,8 @@ public class King extends Figure {
             for (int i = 1; (x + i < 8) && (y + i < 8) && !pieceInTheWay; i++) {
                 if (board[x + i][y + i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x + i][y + i].getShape().equals("queen") || figBoard[x + i][y + i].getShape().equals("bishop"))) {
+                    if ((figBoard[x + i][y + i].getShape().equals("queen") || figBoard[x + i][y + i].getShape().equals("bishop"))
+                            && !figBoard[x + i][y + i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -240,7 +245,8 @@ public class King extends Figure {
             for (int i = 1; (x - i >= 0) && (y - i >= 0) && !pieceInTheWay; i++) {
                 if (board[x - i][y - i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x - i][y - i].getShape().equals("queen") || figBoard[x - i][y - i].getShape().equals("bishop"))) {
+                    if ((figBoard[x - i][y - i].getShape().equals("queen") || figBoard[x - i][y - i].getShape().equals("bishop"))
+                            && !figBoard[x - i][y - i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }
@@ -249,7 +255,8 @@ public class King extends Figure {
             for (int i = 1; (x + i < 8) && (y - i >= 0) && !pieceInTheWay; i++) {
                 if (board[x + i][y - i]) {
                     pieceInTheWay = true;
-                    if ((figBoard[x + i][y - i].getShape().equals("queen") || figBoard[x + i][y - i].getShape().equals("bishop"))) {
+                    if ((figBoard[x + i][y - i].getShape().equals("queen") || figBoard[x + i][y - i].getShape().equals("bishop"))
+                            && !figBoard[x + i][y - i].getColor().equals(this.color)) {
                         check = true;
                     }
                 }

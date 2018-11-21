@@ -33,12 +33,12 @@ public class ChessManager {
     private int gamesPlayed = 0;
 
     private int turn;
-    private int beginner = 0;
+    private int beginner = 1;
 
     private int lastPosition;
 
-    private King whiteKing = new King("white", 0, white[3]);
-    private King blackKing = new King("black", 0, black[3]);
+    private King whiteKing = new King("white", 03, white[3]);
+    private King blackKing = new King("black", 73, black[3]);
 
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
@@ -68,14 +68,14 @@ public class ChessManager {
             figBoard[1][i] = new Pawn("white", 10 + i, white[8]);
         }
 
-        figBoard[7][0] = new Rook("black", 70, white[0]);
-        figBoard[7][1] = new Knight("black", 71, white[1]);
-        figBoard[7][2] = new Bishop("black", 72, white[2]);
-        figBoard[7][3] = new King("black", 73, white[3]);
-        figBoard[7][4] = new Queen("black", 74, white[4]);
-        figBoard[7][5] = new Bishop("black", 75, white[2]);
-        figBoard[7][6] = new Knight("black", 76, white[1]);
-        figBoard[7][7] = new Rook("black", 77, white[0]);
+        figBoard[7][0] = new Rook("black", 70, black[0]);
+        figBoard[7][1] = new Knight("black", 71, black[1]);
+        figBoard[7][2] = new Bishop("black", 72, black[2]);
+        figBoard[7][3] = new King("black", 73, black[3]);
+        figBoard[7][4] = new Queen("black", 74, black[4]);
+        figBoard[7][5] = new Bishop("black", 75, black[2]);
+        figBoard[7][6] = new Knight("black", 76, black[1]);
+        figBoard[7][7] = new Rook("black", 77, black[0]);
 
         for (int i = 0; i < gA.getBoard().length; i++) {
             booleanBoard[7][i] = true;
@@ -94,20 +94,21 @@ public class ChessManager {
         showBoard();
         showTurn();
         showScore();
+        showCheck();
+        setBoardClickable();
 
         if (beginner % 2 == 0)
             this.turn = 0;
         else this.turn = 1;
 
-        setBoardClickable();
-//        showScore();
-//        showTurn();
         beginner++;
 
         numberOfBlackFallen = 0;
         numberOfWhiteFallen = 0;
         fallenFiguresWhite = new ArrayList<Figure>();
         fallenFiguresBlack = new ArrayList<Figure>();
+
+        showCheck();
     }
 
 //    public void clearTags() {
@@ -234,27 +235,32 @@ public class ChessManager {
     public void click(int newPosition) {
         int x = newPosition / 10;
         int y = newPosition % 10;
+        showCheck();
 
         if (strBoard[x][y].equals("possible move") || strBoard[x][y].equals("possible kill")) {
             if(strBoard[x][y].equals("possible kill")){
                 AddFallenPictureToScrollView(figBoard[x][y]);
             }
             moveFromTo(this.lastPosition, newPosition);
+            turn++;
+            showCheck();
             if(figBoard[x][y].getShape().equals("king")) {
                 if (figBoard[x][y].getColor().equals("white"))
                     whiteKing.setPosition(newPosition);
                 else blackKing.setPosition(newPosition);
-                showCheck();
             }
         } else {
             clearBoardBackground();
             clearStringBoard();
             if (booleanBoard[x][y]) {
-                figBoard[x][y].move(figBoard, booleanBoard, strBoard);
-                this.lastPosition = newPosition;
-                showBoard();
+                if((figBoard[x][y].getColor().equals("white") && turn%2 == 0) || (figBoard[x][y].getColor().equals("black") && turn%2 == 1)) {
+                    figBoard[x][y].move(figBoard, booleanBoard, strBoard);
+                    this.lastPosition = newPosition;
+                    showBoard();
+                }
             }
         }
+        showCheck();
     }
 
     public void moveFromTo(int lastPosition, int newPosition) {

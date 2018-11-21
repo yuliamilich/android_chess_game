@@ -159,8 +159,8 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
             l1.addView(rows[i]);
         }
         cM.clearBoardBackground();
-
         cM.setBeginningBoard();
+        cM.reset();
     }
 
     public void createScrollingListsForFallen(){
