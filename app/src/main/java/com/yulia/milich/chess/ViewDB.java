@@ -64,6 +64,8 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void read_fromDC() {
+        opers.clear();
+
         Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
@@ -211,6 +213,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         {
             case R.id.delete:
                 delete();
+                read_fromDC();
                 break;
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);
@@ -226,7 +229,15 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                     String sGamesWon = edGamesWon.getText().toString();
                     String sManager = edManager.getText().toString();
                     users.update(idOfUser, Integer.parseInt(sID), sName, sPassword, sGamesPlayed, sGamesWon, sManager);
+                    read_fromDC();
+                    edId.setText("Id");
+                    edName.setText("Name");
+                    edPassword.setText("Password");
+                    edGamesPlayed.setText("Games Played");
+                    edGamesWon.setText("Games Won");
+                    edManager.setText("Manager?");
                 }
+                break;
 
 
 //            default: finishActivity(1);

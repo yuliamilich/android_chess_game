@@ -92,9 +92,7 @@ public class ChessManager {
         clearBoardBackground();
         clearStringBoard();
         showBoard();
-        showTurn();
         showScore();
-        showCheck();
         setBoardClickable();
 
         if (beginner % 2 == 0)
@@ -109,6 +107,7 @@ public class ChessManager {
         fallenFiguresBlack = new ArrayList<Figure>();
 
         showCheck();
+        showTurn();
     }
 
 //    public void clearTags() {
@@ -243,6 +242,7 @@ public class ChessManager {
             }
             moveFromTo(this.lastPosition, newPosition);
             turn++;
+            showTurn();
             showCheck();
             if(figBoard[x][y].getShape().equals("king")) {
                 if (figBoard[x][y].getColor().equals("white"))
