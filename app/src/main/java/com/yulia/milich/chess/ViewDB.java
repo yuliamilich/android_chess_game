@@ -95,7 +95,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name = adp.getItem(position).toString();
 
-                Cursor data = users.getItemID(name);
+                Cursor data = users.getItem(name);
 
                 int itemID = -1;
                 String password = "";

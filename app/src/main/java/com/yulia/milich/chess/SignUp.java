@@ -1,9 +1,11 @@
 package com.yulia.milich.chess;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,22 +53,24 @@ public class SignUp extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                into_table();
-                table_close();
+                if(into_table()) {
+                    table_close();
 
-                startActivity(intent);
-                finish();
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
 
-    public void into_table() {
+    public boolean into_table() {
         String stName = userName.getText().toString();
         String stPassword = password.getText().toString();
         String manager = "false";
         if (isManager)
             manager = "true";
-        users.addData(stName,stPassword,manager);
+        if(!isNameTaken(stName)) {
+            users.addData(stName, stPassword, manager);
 //        int code = Integer.parseInt(stCode);
 //        double summa = Double.parseDouble(stSumma);
 //        int num = Integer.parseInt(stNum);
@@ -77,8 +81,26 @@ public class SignUp extends AppCompatActivity {
 //        cv.put(DBUsers.NUMBER, stNum);
 //        sqdb.insert(DBUsers.TABLE_NAME, null, cv);
 
-        userName.setText("");
-        password.setText("");
+            userName.setText("");
+            password.setText("");
+            return true;
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+
+            builder.setCancelable(true);
+            builder.setTitle("Bad user name");
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.setMessage("This name is taken!");
+            builder.show();
+            return false;
+        }
     }
 
     public void table_close() {
@@ -86,4 +108,33 @@ public class SignUp extends AppCompatActivity {
         users.close();
     }
 
+
+    public boolean isNameTaken(String name){
+        boolean ok = false;
+        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+        c.moveToFirst();
+        while (!c.isAfterLast() && !ok) {
+            int nameColIndex = c.getColumnIndex(users.NAME);
+
+            String name1 = c.getString(nameColIndex);
+            if(name1.equals(name))
+                ok = true;
+            c.moveToNext();
+        }
+
+        return ok;
+
+//        if(users.getItem(name).getInt(0) == -1)
+//            return false;
+//        else return true;
+
+        //        try {
+//            users.getItem(name);
+//            return true;
+//        }
+//        catch (Exception e){
+//            return false;
+//        }
+
+    }
 }
