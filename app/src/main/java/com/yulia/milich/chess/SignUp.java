@@ -69,7 +69,7 @@ public class SignUp extends AppCompatActivity {
         String manager = "false";
         if (isManager)
             manager = "true";
-        if(!isNameTaken(stName)) {
+        if(!users.isNameTaken(stName) && isPasswordValid(stPassword)) {
             users.addData(stName, stPassword, manager);
 //        int code = Integer.parseInt(stCode);
 //        double summa = Double.parseDouble(stSumma);
@@ -89,7 +89,6 @@ public class SignUp extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
 
             builder.setCancelable(true);
-            builder.setTitle("Bad user name");
 
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -97,7 +96,16 @@ public class SignUp extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
-            builder.setMessage("This name is taken!");
+
+            if(isPasswordValid(stPassword)){
+                builder.setTitle("Bad user password");
+                builder.setMessage("Password should be longer then 6");
+            }
+            else {
+                builder.setTitle("Bad user name");
+                builder.setMessage("This name is taken!");
+            }
+
             builder.show();
             return false;
         }
@@ -108,33 +116,10 @@ public class SignUp extends AppCompatActivity {
         users.close();
     }
 
-
-    public boolean isNameTaken(String name){
-        boolean ok = false;
-        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
-        c.moveToFirst();
-        while (!c.isAfterLast() && !ok) {
-            int nameColIndex = c.getColumnIndex(users.NAME);
-
-            String name1 = c.getString(nameColIndex);
-            if(name1.equals(name))
-                ok = true;
-            c.moveToNext();
+    public boolean isPasswordValid(String password){
+        if(password.length() > 6){
+            return true;
         }
-
-        return ok;
-
-//        if(users.getItem(name).getInt(0) == -1)
-//            return false;
-//        else return true;
-
-        //        try {
-//            users.getItem(name);
-//            return true;
-//        }
-//        catch (Exception e){
-//            return false;
-//        }
-
+        else return false;
     }
 }

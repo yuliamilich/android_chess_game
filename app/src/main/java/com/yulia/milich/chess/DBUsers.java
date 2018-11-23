@@ -154,4 +154,21 @@ public class DBUsers extends SQLiteOpenHelper {
         updateGamesWon(newGamesWon,id);
         updateManager(newManager, id);
     }
+
+    public boolean isNameTaken(String name) {
+        boolean ok = false;
+        SQLiteDatabase sqdb = this.getWritableDatabase();
+        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+        c.moveToFirst();
+        while (!c.isAfterLast() && !ok) {
+            int nameColIndex = c.getColumnIndex(NAME);
+
+            String name1 = c.getString(nameColIndex);
+            if (name1.equals(name))
+                ok = true;
+            c.moveToNext();
+        }
+
+        return ok;
+    }
 }
