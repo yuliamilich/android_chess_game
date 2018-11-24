@@ -1,6 +1,9 @@
 package com.yulia.milich.chess;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,18 +11,27 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class AddPlayers extends AppCompatActivity implements View.OnClickListener{
-    private EditText playerWhite;
-    private EditText playerBlack;
-    private String playerBlackStr,playerWhiteStr;
+    SQLiteDatabase sqdb;
+    DBUsers users;
+    private EditText playerWhite, passwordWhite;
+    private EditText playerBlack, passwordBlack;
+    private String playerBlackStr,playerWhiteStr, passwordBlackStr, passwordWhiteStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_players);
 
+        users = new DBUsers(this);
+        sqdb = users.getWritableDatabase();
+
         playerWhite = (EditText) findViewById(R.id.playerWhite);
 
+        passwordWhite = (EditText) findViewById(R.id.passwordWhite);
+
         playerBlack = (EditText) findViewById(R.id.playerBlack);
+
+        passwordBlack = (EditText) findViewById(R.id.passwordBlack);
 
         Button done = (Button) findViewById(R.id.done);
         done.setOnClickListener(this);
@@ -37,9 +49,43 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
             case R.id.done:
                 playerWhiteStr = playerWhite.getText().toString();
                 playerBlackStr = playerBlack.getText().toString();
-                intent = new Intent(this, TheChessGame.class);
-                intent.putExtra("playerWhiteStr", playerWhiteStr);
-                intent.putExtra("playerBlackStr", playerBlackStr);
+                passwordWhiteStr = passwordWhite.getText().toString();
+                passwordBlackStr = passwordBlack.getText().toString();
+                if(users.doesUserExists(playerWhiteStr, passwordWhiteStr) && users.doesUserExists(playerBlackStr, passwordBlackStr)) {
+                    intent = new Intent(this, TheChessGame.class);
+                    intent.putExtra("playerWhiteStr", playerWhiteStr);
+                    intent.putExtra("playerBlackStr", playerBlackStr);
+                }
+                else{
+                    String title = "";
+                    String message = "";
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddPlayers.this);
+
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    if(!users.doesUserExists(playerWhiteStr, passwordWhiteStr)){
+                        title += "White player not found. ";
+                        message += "White player name or password wrong! /n";
+                    }
+
+                    if(!users.doesUserExists(playerBlackStr, passwordBlackStr)){
+                        title += "Black player not found. ";
+                        message += "Black player name or password wrong! /n";
+                    }
+
+                    builder.setTitle(title);
+                    builder.setMessage(message);
+
+                    builder.show();
+                }
                 break;
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);

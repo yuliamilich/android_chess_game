@@ -69,14 +69,14 @@ public class DBUsers extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getItem(String name){
+    public Cursor getItem(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + UID + ", " + NAME + ", " + PASSWORD +  ", " + GAMESPLAYED +  ", " + GAMESWON +  ", " + MANAGER + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
-        Cursor data = db.rawQuery(query,null);
+        String query = "SELECT " + UID + ", " + NAME + ", " + PASSWORD + ", " + GAMESPLAYED + ", " + GAMESWON + ", " + MANAGER + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public void updateName(String newName, int id){
+    public void updateName(String newName, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'";
 //        Log.d(TAG, "updateName: query: " + query);
@@ -84,9 +84,9 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updatePassword(String newPassword, int id){
+    public void updatePassword(String newPassword, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-       //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = '" + newPassword + "' WHERE " + UID + " = '" + id + "'";
 //        Log.d(TAG, "updateName: query: " + query);
@@ -94,17 +94,17 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateGamesPlayed(String newGamesPlayed, int id){
+    public void updateGamesPlayed(String newGamesPlayed, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
-        String query = "UPDATE " + TABLE_NAME + " SET " + GAMESPLAYED + " = '" + newGamesPlayed+ "' WHERE " + UID + " = '" + id + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + GAMESPLAYED + " = '" + newGamesPlayed + "' WHERE " + UID + " = '" + id + "'";
 //        Log.d(TAG, "updateName: query: " + query);
 //        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
-    public void updateGamesWon(String newGamesWon, int id){
+    public void updateGamesWon(String newGamesWon, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -114,7 +114,7 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateManager(String newManager, int id){
+    public void updateManager(String newManager, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
         //       + NAME + " = '" + oldName + "'";
@@ -124,7 +124,7 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void updateID(int id, int newID){
+    public void updateID(int id, int newID) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + UID + " = '" + newID + "' WHERE " + UID + " = '" + id + "'";
 //        Log.d(TAG, "updateName: query: " + query);
@@ -132,10 +132,10 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void deleteName(int id){
+    public void deleteName(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME + " WHERE " + UID + " = '" + id + "'";
-              //  + " AND " + NAME + " = '" + name + "'";
+        //  + " AND " + NAME + " = '" + name + "'";
         db.execSQL(query);
 
 //        Cursor c = db.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
@@ -146,12 +146,12 @@ public class DBUsers extends SQLiteOpenHelper {
 //        }
     }
 
-    public void update(int id, int newId, String newName, String newPassword, String newGamesPlayed, String newGamesWon, String newManager){
+    public void update(int id, int newId, String newName, String newPassword, String newGamesPlayed, String newGamesWon, String newManager) {
         updateID(id, newId);
         updateName(newName, id);
         updatePassword(newPassword, id);
         updateGamesPlayed(newGamesPlayed, id);
-        updateGamesWon(newGamesWon,id);
+        updateGamesWon(newGamesWon, id);
         updateManager(newManager, id);
     }
 
@@ -170,5 +170,30 @@ public class DBUsers extends SQLiteOpenHelper {
         }
 
         return ok;
+    }
+
+    public boolean doesUserExists(String name, String password) {
+        boolean exist = false;
+        boolean ok = false;
+
+        SQLiteDatabase sqdb = this.getWritableDatabase();
+        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+        c.moveToFirst();
+        while (!c.isAfterLast() && !ok) {
+            int nameColIndex = c.getColumnIndex(NAME);
+            int passwordColIndex = c.getColumnIndex(PASSWORD);
+
+            String name1 = c.getString(nameColIndex);
+            String password1 = c.getString(passwordColIndex);
+
+            if (name1.equals(name) && password1.equals(password)) {
+                exist = true;
+                ok = true;
+            }
+            c.moveToNext();
+        }
+
+
+        return exist;
     }
 }
