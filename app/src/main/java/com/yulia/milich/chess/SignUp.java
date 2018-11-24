@@ -97,9 +97,9 @@ public class SignUp extends AppCompatActivity {
                 }
             });
 
-            if(isPasswordValid(stPassword)){
+            if(!isPasswordValid(stPassword)){
                 builder.setTitle("Bad user password");
-                builder.setMessage("Password should be longer then 6");
+                builder.setMessage("Password should be longer then 5");
             }
             else {
                 builder.setTitle("Bad user name");
@@ -117,7 +117,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public boolean isPasswordValid(String password){
-        if(password.length() > 6){
+        if(password.length() > 5){
             return true;
         }
         else return false;

@@ -51,17 +51,7 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 playerBlackStr = playerBlack.getText().toString();
                 passwordWhiteStr = passwordWhite.getText().toString();
                 passwordBlackStr = passwordBlack.getText().toString();
-                if(users.doesUserExists(playerWhiteStr, passwordWhiteStr) && users.doesUserExists(playerBlackStr, passwordBlackStr)) {
-                    intent = new Intent(this, TheChessGame.class);
-                    intent.putExtra("playerWhiteStr", playerWhiteStr);
-                    intent.putExtra("playerBlackStr", playerBlackStr);
-                    startActivity(intent);
-                    finish();
-                }
-                else{
-                    String title = "";
-                    String message = "";
-
+                if(playerBlackStr.equals(passwordWhiteStr)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddPlayers.this);
 
                     builder.setCancelable(true);
@@ -73,20 +63,49 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                         }
                     });
 
-                    if(!users.doesUserExists(playerWhiteStr, passwordWhiteStr)){
-                        title += "White player not found. ";
-                        message += "White player name or password wrong!";
-                    }
-
-                    if(!users.doesUserExists(playerBlackStr, passwordBlackStr)){
-                        title += "Black player not found. ";
-                        message += "Black player name or password wrong!";
-                    }
-
-                    builder.setTitle(title);
-                    builder.setMessage(message);
+                    builder.setTitle("Don't play against yourself!");
+                    builder.setMessage(":P");
 
                     builder.show();
+                }
+                else{
+                    if(users.doesUserExists(playerWhiteStr, passwordWhiteStr) && users.doesUserExists(playerBlackStr, passwordBlackStr)) {
+                        intent = new Intent(this, TheChessGame.class);
+                        intent.putExtra("playerWhiteStr", playerWhiteStr);
+                        intent.putExtra("playerBlackStr", playerBlackStr);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        String title = "";
+                        String message = "";
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlayers.this);
+
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        if(!users.doesUserExists(playerWhiteStr, passwordWhiteStr)){
+                            title += "White player not found. ";
+                            message += "White player name or password wrong!";
+                        }
+
+                        if(!users.doesUserExists(playerBlackStr, passwordBlackStr)){
+                            title += "Black player not found. ";
+                            message += "Black player name or password wrong!";
+                        }
+
+                        builder.setTitle(title);
+                        builder.setMessage(message);
+
+                        builder.show();
+                    }
                 }
                 break;
             case R.id.newUser:
@@ -94,10 +113,6 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra("from", "AddPlayers");
                 startActivity(intent);
                 finish();
-
-//            default: finishActivity(1);
-//                finish();
-//                break;
         }
 
     }

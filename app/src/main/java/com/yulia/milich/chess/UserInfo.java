@@ -61,8 +61,25 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener{
             case R.id.edit:
                     String sName = name;
                     String sPassword = password.getText().toString();
+                if(password.length() > 5){
                     users.updatePassword(sPassword, sName);
                     password.setText("");
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UserInfo.this);
+
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setTitle("Bad user password");
+                    builder.setMessage("Password should be longer then 5");
+                    builder.show();
+                }
         }
     }
 
