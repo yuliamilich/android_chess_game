@@ -17,7 +17,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         Button play = (Button) findViewById(R.id.play);
         play.setOnClickListener(this);
 
-        Button help = (Button) findViewById(R.id.help);
+        Button help = (Button) findViewById(R.id.logIn);
         help.setOnClickListener(this);
 
         Button viewDB = (Button) findViewById(R.id.ViewDB);
@@ -33,6 +33,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.ViewDB:
                 intent = new Intent(this, ViewDB.class);
+                break;
+            case R.id.logIn:
+                intent = new Intent(this, LogIn.class);
                 break;
 
 //            case R.id.help:

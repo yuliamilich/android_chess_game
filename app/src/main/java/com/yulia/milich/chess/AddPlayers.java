@@ -55,6 +55,8 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                     intent = new Intent(this, TheChessGame.class);
                     intent.putExtra("playerWhiteStr", playerWhiteStr);
                     intent.putExtra("playerBlackStr", playerBlackStr);
+                    startActivity(intent);
+                    finish();
                 }
                 else{
                     String title = "";
@@ -73,12 +75,12 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
 
                     if(!users.doesUserExists(playerWhiteStr, passwordWhiteStr)){
                         title += "White player not found. ";
-                        message += "White player name or password wrong! /n";
+                        message += "White player name or password wrong!";
                     }
 
                     if(!users.doesUserExists(playerBlackStr, passwordBlackStr)){
                         title += "Black player not found. ";
-                        message += "Black player name or password wrong! /n";
+                        message += "Black player name or password wrong!";
                     }
 
                     builder.setTitle(title);
@@ -90,12 +92,13 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);
                 intent.putExtra("from", "AddPlayers");
+                startActivity(intent);
+                finish();
 
 //            default: finishActivity(1);
 //                finish();
 //                break;
         }
-        startActivity(intent);
-        finish();
+
     }
 }

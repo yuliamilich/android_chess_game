@@ -20,7 +20,9 @@
         <activity android:name=".AddPlayers" />
         <activity android:name=".TheChessGame" />
         <activity android:name=".SignUp" />
-        <activity android:name=".ViewDB"></activity>
+        <activity android:name=".ViewDB" />
+        <activity android:name=".LogIn" />
+        <activity android:name=".UserInfo"></activity>
     </application>
 
 </manifest>

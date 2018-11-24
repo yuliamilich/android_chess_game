@@ -94,6 +94,16 @@ public class DBUsers extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    public void updatePassword(String newPassword, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
+        //       + NAME + " = '" + oldName + "'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = '" + newPassword + "' WHERE " + NAME + " = '" + name + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
     public void updateGamesPlayed(String newGamesPlayed, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
