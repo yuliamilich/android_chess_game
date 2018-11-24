@@ -50,6 +50,9 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         cM = new ChessManager(this);
 
+        cM.users = new DBUsers(this);
+        cM.sqdb = cM.users.getWritableDatabase();
+
         createScrollingListsForFallen();
 
         createBoard();

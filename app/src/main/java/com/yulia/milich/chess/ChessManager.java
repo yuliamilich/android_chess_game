@@ -2,6 +2,8 @@ package com.yulia.milich.chess;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +23,8 @@ public class ChessManager {
     private String[][] strBoard = new String[8][8];
     private boolean[][] booleanBoard = new boolean[8][8];
     private Figure[][] figBoard = new Figure[8][8];
+    SQLiteDatabase sqdb;
+    DBUsers users;
 
     //private Figure theMovedFigure = new Figure("none", "none", 0);
     private ArrayList<Figure> fallenFiguresWhite;
@@ -237,14 +241,14 @@ public class ChessManager {
         showCheck();
 
         if (strBoard[x][y].equals("possible move") || strBoard[x][y].equals("possible kill")) {
-            if(strBoard[x][y].equals("possible kill")){
+            if (strBoard[x][y].equals("possible kill")) {
                 AddFallenPictureToScrollView(figBoard[x][y]);
             }
             moveFromTo(this.lastPosition, newPosition);
             turn++;
             showTurn();
             showCheck();
-            if(figBoard[x][y].getShape().equals("king")) {
+            if (figBoard[x][y].getShape().equals("king")) {
                 if (figBoard[x][y].getColor().equals("white"))
                     whiteKing.setPosition(newPosition);
                 else blackKing.setPosition(newPosition);
@@ -253,7 +257,7 @@ public class ChessManager {
             clearBoardBackground();
             clearStringBoard();
             if (booleanBoard[x][y]) {
-                if((figBoard[x][y].getColor().equals("white") && turn%2 == 0) || (figBoard[x][y].getColor().equals("black") && turn%2 == 1)) {
+                if ((figBoard[x][y].getColor().equals("white") && turn % 2 == 0) || (figBoard[x][y].getColor().equals("black") && turn % 2 == 1)) {
                     figBoard[x][y].move(figBoard, booleanBoard, strBoard);
                     this.lastPosition = newPosition;
                     showBoard();
@@ -360,12 +364,16 @@ public class ChessManager {
             title = gA.getBlackName() + " won!!! :D";
             message = gA.getWhiteName() + " lost!!! :(";
             this.blackWon++;
+            updateGames("won", 1, gA.getBlackName());
         } else {
             title = gA.getWhiteName() + " won!!! :D";
             message = gA.getBlackName() + " lost!!! :(";
             this.whiteWon++;
+            updateGames("won", 1, gA.getWhiteName());
         }
         this.gamesPlayed++;
+        updateGames("played", 1, gA.getWhiteName());
+        updateGames("played", 1, gA.getBlackName());
         showScore();
         gA.winner(title, message);
         setBoardUnClickable();
@@ -410,4 +418,28 @@ public class ChessManager {
         }
     }
 
+    public void updateGames(String what, int add, String name) {
+        Cursor data = users.getItem(name);
+
+        int itemID;
+        int gamesPlayed;
+        int gamesWon;
+        while (data.moveToNext()) {
+            int idColIndexx = data.getColumnIndex(users.UID);
+            int gamesPlayedColIndexx = data.getColumnIndex(users.GAMESPLAYED);
+            int gamesWonColIndexx = data.getColumnIndex(users.GAMESWON);
+
+            itemID = data.getInt(idColIndexx);
+            gamesPlayed = data.getInt(gamesPlayedColIndexx);
+            gamesWon = data.getInt(gamesWonColIndexx);
+
+            if (what.equals("won")) {
+                users.updateGamesWon(String.valueOf(add + gamesWon), itemID);
+            }
+            else users.updateGamesPlayed(String.valueOf(add + gamesPlayed), itemID);
+
+        }
+
+
+    }
 }
