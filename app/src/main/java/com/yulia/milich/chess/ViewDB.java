@@ -42,8 +42,6 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         users = new DBUsers(this);
         sqdb = users.getWritableDatabase();
 
-//        users.onUpgrade(sqdb,1,2);
-
         Button newUser = (Button) findViewById(R.id.newUser);
         newUser.setOnClickListener(this);
 
@@ -71,7 +69,6 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         read_fromDC("");
         //table_close();
 
-        //users.deleteName(7);
     }
 
     public void read_fromDC(String searchWord) {
@@ -200,22 +197,6 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
             }
         });
                 builder.show();
-//        if (idOfUser == -1) {
-//            Context context = getApplicationContext();
-//            CharSequence text = "Are you sure you want to delete all?";
-//            int duration = Toast.LENGTH_SHORT;
-//
-//            Toast toast2 = Toast.makeText(context, text, duration);
-//            toast2.show();
-//        }
-//        else{
-//            Context context = getApplicationContext();
-//            CharSequence text = "Are you sure you want to delete it?";
-//            int duration = Toast.LENGTH_SHORT;
-//
-//            Toast toast2 = Toast.makeText(context, text, duration);
-//            toast2.show();
-//        }
     }
 
     @Override
@@ -259,11 +240,6 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                 startActivity(intent);
                 finish();
                 break;
-
-
-//            default: finishActivity(1);
-//                finish();
-//                break;
         }
 
     }

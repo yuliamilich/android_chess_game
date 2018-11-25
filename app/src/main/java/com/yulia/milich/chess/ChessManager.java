@@ -114,14 +114,6 @@ public class ChessManager {
         showTurn();
     }
 
-//    public void clearTags() {
-//        for (int i = 0; i < gA.getBoard().length; i++) {
-//            for (int j = 0; j < gA.getBoard().length; j++) {
-//                gA.getBoard()[i][j].setTag("");
-//            }
-//        }
-//    }
-
     public void clearBoardBackground() {
         for (int i = 0; i < gA.getBoard().length; i++) {
             for (int j = 0; j < gA.getBoard().length; j++) {
@@ -200,41 +192,6 @@ public class ChessManager {
         }
     }
 
-//    public void clearButton(int position){
-//        int x= position/10;
-//        int y = position%10;
-//        gA.getBoard()[x][y].setImageResource(0);
-//        gA.getBoard()[x][y].setRotation(0);
-//        figBoard[x][y].setColor("none");
-//        figBoard[x][y].setShape("none");
-//        figBoard[x][y].setImageResource(0);
-//    }
-
-    //shows the options to move the piece.
-//    public void showOptions(ImageButton b) {
-//        clearBoardBackground();
-//        clearTags();
-//        int position = b.getId();
-//        int x = position / 10;
-//        int y = position % 10;
-//        String color = this.figBoard[x][y].getColor();
-//        switch (this.figBoard[x][y].getShape()) {
-//            case "rook":
-//                Rook rook = new Rook(color, gA.getBoard(), this.figBoard, position);
-//                rook.showOptions();
-//                break;
-//            case "king":
-//                King king = new King(color, gA.getBoard(), this.figBoard, position);
-//                king.showOptions();
-//                break;
-//            case "knight":
-//                Knight knight = new Knight(color, gA.getBoard(), this.figBoard, position);
-//                knight.showOptions();
-//                break;
-//
-//        }
-//    }
-
     public void click(int newPosition) {
         int x = newPosition / 10;
         int y = newPosition % 10;
@@ -284,63 +241,6 @@ public class ChessManager {
         clearBoardBackground();
         showBoard();
     }
-
-//    public void moveToEmptyPlaceFromAGivenPlace(int lastPosition, int movingTo) {
-//        int x = lastPosition / 10;
-//        int y = lastPosition % 10;
-//        //i don't know whether to make it a local variable or not
-//        //Figure theMovedFigure = figBoard[x][y];
-//        theMovedFigure.copy(figBoard[x][y]);
-//        clearButton(lastPosition);
-//        x = movingTo / 10;
-//        y = movingTo % 10;
-//        figBoard[x][y].setShape(theMovedFigure.getShape());
-//        figBoard[x][y].setColor(theMovedFigure.getColor());
-//        figBoard[x][y].setImageResource(theMovedFigure.getImageResource());
-//        gA.getBoard()[x][y].setImageResource(theMovedFigure.getImageResource());
-//        if (theMovedFigure.getColor().equals("white"))
-//            gA.getBoard()[x][y].setRotation(180);
-//        else gA.getBoard()[x][y].setRotation(0);
-//        clearTags();
-//        clearBoardBackground();
-//
-//    }
-//
-//    public void moveToKillFromAGivenPlace(int lastPosition, int movingTo) {
-//        int x = lastPosition / 10;
-//        int y = lastPosition % 10;
-//        //fallen.copy(figBoard[x][y]);
-//        //i don't know whether to make it a local variable or not
-//        //Figure theMovedFigure = figBoard[x][y];
-//        theMovedFigure.copy(figBoard[x][y]);
-//        clearButton(lastPosition);
-//        x = movingTo / 10;
-//        y = movingTo % 10;
-//        Figure fallen = new Figure("none", "none", 0);
-//        fallen.copy(figBoard[x][y]);
-//        figBoard[x][y].setShape(theMovedFigure.getShape());
-//        figBoard[x][y].setColor(theMovedFigure.getColor());
-//        figBoard[x][y].setImageResource(theMovedFigure.getImageResource());
-//        gA.getBoard()[x][y].setImageResource(theMovedFigure.getImageResource());
-//        if (theMovedFigure.getColor().equals("white"))
-//            gA.getBoard()[x][y].setRotation(180);
-//        else gA.getBoard()[x][y].setRotation(0);
-//        clearTags();
-//        clearBoardBackground();
-//
-//        //and the change from the moveToEmptyPlaceFromAGivenPlace
-//        //is that we need to save the fallen figure in a list and put an image beneath (or above) the board.
-//        AddFallenPictureToScrollView(fallen);
-//        if (fallen.getColor().equals("white")) {
-//            fallenFiguresWhite.add(fallen);
-//            numberOfWhiteFallen++;
-//        } else {
-//            fallenFiguresBlack.add(fallen);
-//            numberOfBlackFallen++;
-//        }
-//
-//
-//    }
 
     public void AddFallenPictureToScrollView(Figure figure) {
         if (figure.getColor().equals("white")) {
@@ -439,7 +339,5 @@ public class ChessManager {
             else users.updateGamesPlayed(String.valueOf(add + gamesPlayed), itemID);
 
         }
-
-
     }
 }

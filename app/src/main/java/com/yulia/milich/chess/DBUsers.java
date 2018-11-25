@@ -52,8 +52,6 @@ public class DBUsers extends SQLiteOpenHelper {
 
     public boolean addData(String name, String password, String manager) {
         SQLiteDatabase sqdb = getWritableDatabase();
-//        int summa = Integer.parseInt(gamesPlayer);
-//        int num = Integer.parseInt(gamesWon);
         ContentValues cv = new ContentValues();
         cv.put(DBUsers.NAME, name);
         cv.put(DBUsers.PASSWORD, password);
@@ -86,81 +84,49 @@ public class DBUsers extends SQLiteOpenHelper {
     public void updateName(String newName, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updatePassword(String newPassword, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-        //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = '" + newPassword + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updatePassword(String newPassword, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-        //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + PASSWORD + " = '" + newPassword + "' WHERE " + NAME + " = '" + name + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updateGamesPlayed(String newGamesPlayed, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-        //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + GAMESPLAYED + " = '" + newGamesPlayed + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updateGamesWon(String newGamesWon, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-        //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + GAMESWON + " = '" + newGamesWon + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updateManager(String newManager, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "UPDATE " + TABLE_NAME + " SET " + NAME + " = '" + newName + "' WHERE " + UID + " = '" + id + "'" + " AND "
-        //       + NAME + " = '" + oldName + "'";
         String query = "UPDATE " + TABLE_NAME + " SET " + MANAGER + " = '" + newManager + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void updateID(int id, int newID) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET " + UID + " = '" + newID + "' WHERE " + UID + " = '" + id + "'";
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
     }
 
     public void deleteName(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME + " WHERE " + UID + " = '" + id + "'";
-        //  + " AND " + NAME + " = '" + name + "'";
         db.execSQL(query);
-
-//        Cursor c = db.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
-//        c.moveToPosition(id);
-//        while (!c.isAfterLast()) {
-//            updateID(c.getColumnIndex("_id"), c.getColumnIndex("_id")+1);
-//            c.moveToNext();
-//        }
     }
 
     public void update(int id, int newId, String newName, String newPassword, String newGamesPlayed, String newGamesWon, String newManager) {
@@ -175,15 +141,20 @@ public class DBUsers extends SQLiteOpenHelper {
     public boolean isNameTaken(String name) {
         boolean ok = false;
         SQLiteDatabase sqdb = this.getWritableDatabase();
-        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
-        c.moveToFirst();
-        while (!c.isAfterLast() && !ok) {
-            int nameColIndex = c.getColumnIndex(NAME);
-
-            String name1 = c.getString(nameColIndex);
-            if (name1.equals(name))
-                ok = true;
-            c.moveToNext();
+//        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+//        c.moveToFirst();
+//        while (!c.isAfterLast() && !ok) {
+//            int nameColIndex = c.getColumnIndex(NAME);
+//
+//            String name1 = c.getString(nameColIndex);
+//            if (name1.equals(name))
+//                ok = true;
+//            c.moveToNext();
+//        }
+//        c.close();
+        Cursor c = getItem(name);
+        if(c.getCount()>0){
+            ok = true;
         }
         c.close();
         return ok;

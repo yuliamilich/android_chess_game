@@ -22,7 +22,6 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton board[][] = new ImageButton[8][8];
     private ChessManager cM;
-    private int lastPosition;
     private ImageView[][] fallenFiguresWhite = new ImageView[2][8];
     private ImageView[][] fallenFiguresBlack = new ImageView[2][8];
     private TextView whiteWon, blackWon;
@@ -76,14 +75,6 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
             default:
                 cM.click(v.getId());
-//
-//                if(v.getTag().equals("possibleMove") || v.getTag().equals("possibleKill")){
-//                    cM.moveFromTo(this.lastPosition, v.getId());
-//                }
-//                else{
-//                    cM.showOptions((ImageButton) v);
-//                    this.lastPosition = v.getId();
-//                }
         }
     }
 
@@ -146,14 +137,6 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
                 board[i][j].setTag(""); // setting a tag - the tag represents the figure that is placed on the button
                 board[i][j].setLayoutParams(new TableRow.LayoutParams(width, height)); // setting the size of the button
-
-                // setting the background so it will be a chess board (with black and white, except now it is blue and white)
-//                if((i+j)%2 == 1){
-//                    board[i][j].setBackgroundResource(R.color.white);
-//                }
-//                else {
-//                    board[i][j].setBackgroundResource(R.color.someBlue);
-//                }
 
                 board[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP); // that way the image on the button is in the right size
                 board[i][j].setOnClickListener(this);

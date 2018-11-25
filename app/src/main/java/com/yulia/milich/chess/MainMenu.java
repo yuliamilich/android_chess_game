@@ -34,10 +34,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             case R.id.logIn:
                 intent = new Intent(this, LogIn.class);
                 break;
-
-//            case R.id.help:
-//                intent = new Intent(this, Help.class);
-//                break;
+            case R.id.exit:
+                finish();
+                break;
 
             default: finishActivity(1);
                 finish();

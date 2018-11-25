@@ -23,7 +23,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     private EditText userName, password;
     SQLiteDatabase sqdb;
     DBUsers users;
-//    boolean isManager = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +75,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
             manager = "true";
         if(!users.isNameTaken(stName) && isPasswordValid(stPassword)) {
             users.addData(stName, stPassword, manager);
-//        int code = Integer.parseInt(stCode);
-//        double summa = Double.parseDouble(stSumma);
-//        int num = Integer.parseInt(stNum);
-//        ContentValues cv = new ContentValues();
-//        cv.put(DBUsers.NAME, stName);
-//        cv.put(DBUsers.CODE, stCode);
-//        cv.put(DBUsers.SUMMA, stSumma);
-//        cv.put(DBUsers.NUMBER, stNum);
-//        sqdb.insert(DBUsers.TABLE_NAME, null, cv);
 
             userName.setText("");
             password.setText("");
@@ -139,10 +129,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
                 finish();
                 break;
 
-
-//            default: finishActivity(1);
-//                finish();
-//                break;
         }
     }
 }

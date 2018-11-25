@@ -44,8 +44,6 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
         home.setOnClickListener(this);
     }
 
-
-    //opens the chess game and sends the names to the next activity (which is The Chess Game)
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId())
