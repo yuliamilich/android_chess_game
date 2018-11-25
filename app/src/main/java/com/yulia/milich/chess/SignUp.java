@@ -13,16 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements View.OnClickListener{
     private EditText userName, password;
     SQLiteDatabase sqdb;
     DBUsers users;
-    boolean isManager = false;
+//    boolean isManager = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,6 @@ public class SignUp extends AppCompatActivity {
 
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
-
-        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
-        isManager = checkBox.isChecked();
 
         Intent i = null;
 
@@ -61,9 +59,16 @@ public class SignUp extends AppCompatActivity {
                 }
             }
         });
+
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(this);
     }
 
     public boolean into_table() {
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+        boolean isManager = checkBox.isChecked();
+
         String stName = userName.getText().toString();
         String stPassword = password.getText().toString();
         String manager = "false";
@@ -121,5 +126,23 @@ public class SignUp extends AppCompatActivity {
             return true;
         }
         else return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId())
+        {
+            case R.id.home:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
+                break;
+
+
+//            default: finishActivity(1);
+//                finish();
+//                break;
+        }
     }
 }

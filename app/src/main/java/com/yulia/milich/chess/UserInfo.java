@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -46,15 +47,20 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener{
         viewDB.setOnClickListener(this);
         edit.setOnClickListener(this);
 
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(this);
+
         show();
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId())
         {
             case R.id.viewDB:
-                Intent intent = new Intent(this, ViewDB.class);
+                intent = new Intent(this, ViewDB.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -80,6 +86,12 @@ public class UserInfo extends AppCompatActivity implements View.OnClickListener{
                     builder.setMessage("Password should be longer then 5");
                     builder.show();
                 }
+                break;
+            case R.id.home:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
+                break;
         }
     }
 

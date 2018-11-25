@@ -71,7 +71,14 @@ public class DBUsers extends SQLiteOpenHelper {
 
     public Cursor getItem(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + UID + ", " + NAME + ", " + PASSWORD + ", " + GAMESPLAYED + ", " + GAMESWON + ", " + MANAGER + " FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getItemLike(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME + " LIKE '" + name + "%'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
@@ -178,7 +185,7 @@ public class DBUsers extends SQLiteOpenHelper {
                 ok = true;
             c.moveToNext();
         }
-
+        c.close();
         return ok;
     }
 
@@ -203,7 +210,7 @@ public class DBUsers extends SQLiteOpenHelper {
             c.moveToNext();
         }
 
-
+        c.close();
         return exist;
     }
 }

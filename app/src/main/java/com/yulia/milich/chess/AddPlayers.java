@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class AddPlayers extends AppCompatActivity implements View.OnClickListener{
     SQLiteDatabase sqdb;
@@ -38,6 +39,9 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
 
         Button newUser = (Button) findViewById(R.id.newUser);
         newUser.setOnClickListener(this);
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(this);
     }
 
 
@@ -113,6 +117,12 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra("from", "AddPlayers");
                 startActivity(intent);
                 finish();
+                break;
+            case R.id.home:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
     }

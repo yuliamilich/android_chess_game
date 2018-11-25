@@ -19,6 +19,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         Button help = (Button) findViewById(R.id.logIn);
         help.setOnClickListener(this);
+
+        Button exit = (Button) findViewById(R.id.exit);
+        help.setOnClickListener(this);
     }
 
     public void onClick(View v) {

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +27,10 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
     ArrayAdapter<String> adp;
     ListView lv;
     int idOfUser = -1;
+    String name = "";
     private EditText edId, edName, edPassword, edGamesPlayed, edGamesWon, edManager;
+    private Button searchBtn;
+    private EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +60,25 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         edGamesWon = (EditText) findViewById(R.id.gamesWon);
         edManager = (EditText) findViewById(R.id.manager);
 
+        searchBtn = (Button) findViewById(R.id.searchBtn);
+        searchBtn.setOnClickListener(this);
+        search = (EditText) findViewById(R.id.search);
 
-        read_fromDC();
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(this);
+
+
+        read_fromDC("");
         //table_close();
 
         //users.deleteName(7);
     }
 
-    public void read_fromDC() {
+    public void read_fromDC(String searchWord) {
         opers.clear();
 
-        Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
+        Cursor c = users.getItemLike(searchWord);
+        //Cursor c = sqdb.query(DBUsers.TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
             int idColIndex = c.getColumnIndex(users.UID);
@@ -77,13 +89,13 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
             int managerColIndex = c.getColumnIndex(users.MANAGER);
 
             String id = c.getString((idColIndex));
-            String name = c.getString(nameColIndex);
+            String name1 = c.getString(nameColIndex);
             String password = c.getString(passwordColIndex);
             int gamesPlayed = c.getInt(gamesPlayedColIndex);
             int gamesWon = c.getInt(gamesWonColIndex);
             String manager = c.getString(managerColIndex);
             //String info = id + " " + name + " " + password + " " + gamesPlayed + " " + gamesWon + " " + manager;
-            String info = name;
+            String info = name1;
             opers.add(info);
             c.moveToNext();
         }
@@ -93,7 +105,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = adp.getItem(position).toString();
+                name = adp.getItem(position).toString();
 
                 Cursor data = users.getItem(name);
 
@@ -156,7 +168,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewDB.this);
                 builder.setCancelable(true);
                 if(idOfUser != -1){
-                    builder.setTitle("Delete the user you chose");
+                    builder.setTitle("Delete "+name);
                     builder.setMessage("Are you sure you want to delete it?");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -213,7 +225,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
         {
             case R.id.delete:
                 delete();
-                read_fromDC();
+                read_fromDC(search.getText().toString());
                 break;
             case R.id.newUser:
                 intent = new Intent(this, SignUp.class);
@@ -229,7 +241,7 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                     String sGamesWon = edGamesWon.getText().toString();
                     String sManager = edManager.getText().toString();
                     users.update(idOfUser, Integer.parseInt(sID), sName, sPassword, sGamesPlayed, sGamesWon, sManager);
-                    read_fromDC();
+                    read_fromDC(search.getText().toString());
                     edId.setText("Id");
                     edName.setText("Name");
                     edPassword.setText("Password");
@@ -237,6 +249,15 @@ public class ViewDB extends AppCompatActivity implements View.OnClickListener{
                     edGamesWon.setText("Games Won");
                     edManager.setText("Manager?");
                 }
+                break;
+            case R.id.searchBtn:
+                String searchWord = search.getText().toString();
+                read_fromDC(searchWord);
+                break;
+            case R.id.home:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
                 break;
 
 

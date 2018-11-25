@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class LogIn extends AppCompatActivity  implements View.OnClickListener{
     private EditText name, password;
@@ -28,6 +29,10 @@ public class LogIn extends AppCompatActivity  implements View.OnClickListener{
 
         name = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
+
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(this);
     }
 
     @Override
@@ -59,6 +64,11 @@ public class LogIn extends AppCompatActivity  implements View.OnClickListener{
 
                     builder.show();
                 }
+                break;
+            case R.id.home:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
