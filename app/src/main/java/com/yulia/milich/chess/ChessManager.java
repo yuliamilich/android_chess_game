@@ -237,6 +237,10 @@ public class ChessManager {
         booleanBoard[nx][ny] = true;
         booleanBoard[x][y] = false;
 
+        if(figBoard[nx][ny].getShape().equals("pawn")){
+            promotion(newPosition);
+        }
+
         clearStringBoard();
         clearBoardBackground();
         showBoard();
@@ -339,5 +343,81 @@ public class ChessManager {
             else users.updateGamesPlayed(String.valueOf(add + gamesPlayed), itemID);
 
         }
+    }
+
+    public void promotion(int position){
+        String color = figBoard[position/10][position%10].getColor();
+        if(color.equals("black")){
+            if(position/10 == 0){
+                gA.promotion("black", position);
+//                switch (gA.getPromotionFigure()){
+//                    case "queen":
+//                        figBoard[position/10][position%10] = new Queen("black", position, R.mipmap.queen_black);
+//                        break;
+//                    case "rook":
+//                        figBoard[position/10][position%10] = new Rook("black", position, R.mipmap.rook_black);
+//                        break;
+//                    case "bishop":
+//                        figBoard[position/10][position%10] = new Bishop("black", position, R.mipmap.bishop_black);
+//                        break;
+//                    case "knight":
+//                        figBoard[position/10][position%10] = new Knight("black", position, R.mipmap.knight_black);
+//                        break;
+//                }
+            }
+        }
+        else if(position/10 == 7){
+            gA.promotion("white", position);
+//            switch (gA.getPromotionFigure()){
+//                case "queen":
+//                    figBoard[position/10][position%10] = new Queen("white", position, R.mipmap.queen_white);
+//                    break;
+//                case "rook":
+//                    figBoard[position/10][position%10] = new Rook("white", position, R.mipmap.rook_white);
+//                    break;
+//                case "bishop":
+//                    figBoard[position/10][position%10] = new Bishop("white", position, R.mipmap.bishop_white);
+//                    break;
+//                case "knight":
+//                    figBoard[position/10][position%10] = new Knight("white", position, R.mipmap.knight_white);
+//                    break;
+//            }
+        }
+    }
+
+    public void promotionPartTwo(String color, int position) {
+        if (color.equals("white")) {
+            switch (gA.getPromotionFigure()) {
+                case "queen":
+                    figBoard[position / 10][position % 10] = new Queen("white", position, R.mipmap.queen_white);
+                    break;
+                case "rook":
+                    figBoard[position / 10][position % 10] = new Rook("white", position, R.mipmap.rook_white);
+                    break;
+                case "bishop":
+                    figBoard[position / 10][position % 10] = new Bishop("white", position, R.mipmap.bishop_white);
+                    break;
+                case "knight":
+                    figBoard[position / 10][position % 10] = new Knight("white", position, R.mipmap.knight_white);
+                    break;
+            }
+        }
+        if (color.equals("black")) {
+            switch (gA.getPromotionFigure()) {
+                case "queen":
+                    figBoard[position / 10][position % 10] = new Queen("black", position, R.mipmap.queen_black);
+                    break;
+                case "rook":
+                    figBoard[position / 10][position % 10] = new Rook("black", position, R.mipmap.rook_black);
+                    break;
+                case "bishop":
+                    figBoard[position / 10][position % 10] = new Bishop("black", position, R.mipmap.bishop_black);
+                    break;
+                case "knight":
+                    figBoard[position / 10][position % 10] = new Knight("black", position, R.mipmap.knight_black);
+                    break;
+            }
+        }
+        showBoard();
     }
 }

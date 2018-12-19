@@ -28,6 +28,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     private TextView whiteTurn, blackTurn;
     private TextView checkBlack, checkWhite;
     private String whiteName, blackName;
+    private String promotionFigure = "queen";
 
 
     @Override
@@ -62,6 +63,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         ImageButton restart2 = (ImageButton) findViewById(R.id.restart2);
         restart2.setOnClickListener(this);
+
     }
 
     public void onClick(View v) {
@@ -71,6 +73,19 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.restart2:
                 cM.setBeginningBoard();
+                break;
+            case 1000:
+                promotionFigure = "bishop";
+                //promotionFigureChosen = true;
+                break;
+            case 2000:
+                promotionFigure = "knight";
+                break;
+            case 3000:
+                promotionFigure = "queen";
+                break;
+            case 4000:
+                promotionFigure = "rook";
                 break;
 
             default:
@@ -120,6 +135,10 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     public String getWhiteName() {
         return whiteName;
+    }
+
+    public String getPromotionFigure(){
+        return promotionFigure;
     }
 
     public void createBoard(){
@@ -198,5 +217,54 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         });
         builder.setMessage(message);
         builder.show();
+    }
+
+    public void promotion(final String color, final int position){
+        ImageView [] images = new ImageView[4];
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(TheChessGame.this);
+
+        builder.setCancelable(true);
+        builder.setTitle("pick a figure");
+
+        for(int i =0; i<images.length; i++){
+            images[i] = new ImageView(this);
+        }
+
+        if(color.equals("black")){
+            images[0].setImageResource(R.mipmap.bishop_black);
+            images[1].setImageResource(R.mipmap.knight_black);
+            images[2].setImageResource(R.mipmap.queen_black);
+            images[3].setImageResource(R.mipmap.rook_black);
+        }
+        else{
+            images[0].setImageResource(R.mipmap.bishop_white);
+            images[1].setImageResource(R.mipmap.knight_white);
+            images[2].setImageResource(R.mipmap.queen_white);
+            images[3].setImageResource(R.mipmap.rook_white);
+        }
+
+        TableLayout tl = new TableLayout(this);
+        TableRow tr = new TableRow(this);
+        for (int i = 0; i <images.length; i++){
+            images[i].setId((i+1)*1000);
+            images[i].setOnClickListener(this);
+            tr.addView(images[i]);
+        }
+        tl.addView(tr);
+
+        builder.setMessage("choose a figure");
+        builder.setView(tl);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cM.promotionPartTwo(color, position);
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
     }
 }

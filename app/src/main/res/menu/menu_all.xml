@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btnMusic"
+        android:title="select music"/>
+
+    <item
+        android:id="@+id/btnMute"
+        android:title="Mute"/>
+
+    <item
+        android:id="@+id/btnMainActivity"
+        android:title="Home"/>
+
+</menu>

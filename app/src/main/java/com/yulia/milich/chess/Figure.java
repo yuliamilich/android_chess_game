@@ -1,7 +1,7 @@
 package com.yulia.milich.chess;
 
 public abstract class Figure {
-    protected String shape;
+    //protected String shape;
     protected String color;
     protected int imageResource;
     protected int position;
