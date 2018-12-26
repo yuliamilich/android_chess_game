@@ -2,6 +2,7 @@ package com.yulia.milich.chess;
 
 public abstract class Figure {
     //protected String shape;
+    protected boolean moved;
     protected String color;
     protected int imageResource;
     protected int position;
@@ -10,6 +11,7 @@ public abstract class Figure {
         this.color = color;
         this.position = position;
         this.imageResource = imageResource;
+        this.moved = false;
     }
 
     public int getImageResource(){
@@ -22,6 +24,14 @@ public abstract class Figure {
 
     public void setPosition(int position){
         this.position = position;
+    }
+
+    public void setMoved(){
+        this.moved = true;
+    }
+
+    public boolean getMoved(){
+        return moved;
     }
 
     public abstract String getShape();

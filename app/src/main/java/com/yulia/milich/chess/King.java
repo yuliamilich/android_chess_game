@@ -95,6 +95,27 @@ public class King extends Figure {
                 }
             }
         }
+
+        if(!this.moved){
+            if(!board[x][y-1] && !board[x][y-2]){
+                if(board[x][y-3]){
+                    if(figBoard[x][y-3].getShape().equals("rook") && figBoard[x][y-3].getColor().equals(this.color)){
+                        if(!figBoard[x][y-3].getMoved()){
+                            move[x][y-2] = "castling";
+                        }
+                    }
+                }
+            }
+            if(!board[x][y+1] && !board[x][y+2] && !board[x][y+3]){
+                if(board[x][y+4]){
+                    if(figBoard[x][y+4].getShape().equals("rook") && figBoard[x][y+4].getColor().equals(this.color)){
+                        if(!figBoard[x][y+4].getMoved()){
+                            move[x][y+2] = "castling";
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public boolean isCheck(Figure[][] figBoard, boolean[][] board, String[][] move) {

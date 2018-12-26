@@ -172,7 +172,7 @@ public class ChessManager {
     public void showBoard() {
         for (int i = 0; i < booleanBoard.length; i++) {
             for (int j = 0; j < booleanBoard.length; j++) {
-                if (strBoard[i][j].equals("possible move")) {
+                if (strBoard[i][j].equals("possible move") || strBoard[i][j].equals("castling")) {
                     gA.getBoard()[i][j].setBackgroundResource(R.color.green);
                 }
                 if (strBoard[i][j].equals("possible kill")) {
@@ -197,9 +197,12 @@ public class ChessManager {
         int y = newPosition % 10;
         showCheck();
 
-        if (strBoard[x][y].equals("possible move") || strBoard[x][y].equals("possible kill")) {
+        if (strBoard[x][y].equals("possible move") || strBoard[x][y].equals("possible kill") || strBoard[x][y].equals("castling")) {
             if (strBoard[x][y].equals("possible kill")) {
                 AddFallenPictureToScrollView(figBoard[x][y]);
+            }
+            if(strBoard[x][y].equals("castling")){
+                castling(this.lastPosition, newPosition);
             }
             moveFromTo(this.lastPosition, newPosition);
             turn++;
@@ -233,6 +236,7 @@ public class ChessManager {
 
         figBoard[nx][ny] = figBoard[x][y];
         figBoard[nx][ny].setPosition(newPosition);
+        figBoard[nx][ny].setMoved();
 
         booleanBoard[nx][ny] = true;
         booleanBoard[x][y] = false;
@@ -244,6 +248,23 @@ public class ChessManager {
         clearStringBoard();
         clearBoardBackground();
         showBoard();
+    }
+
+    public void castling(int lastPosition, int newPosition){
+        int x = lastPosition / 10;
+        int y = lastPosition % 10;
+
+        int nx = newPosition / 10;
+        int ny = newPosition % 10;
+
+        if(y-ny == 2){
+            moveFromTo(lastPosition, newPosition);
+            moveFromTo(x*10+y-3, x*10+y-1);
+        }
+        else{
+            moveFromTo(lastPosition, newPosition);
+            moveFromTo(x*10+y+4, x*10+y+1);
+        }
     }
 
     public void AddFallenPictureToScrollView(Figure figure) {
