@@ -18,7 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class TheChessGame extends AppCompatActivity implements View.OnClickListener{
+public class TheChessGame extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton board[][] = new ImageButton[8][8];
     private ChessManager cM;
@@ -67,7 +67,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.restart:
                 cM.setBeginningBoard();
                 break;
@@ -93,7 +93,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public ImageButton[][] getBoard(){
+    public ImageButton[][] getBoard() {
         return board;
     }
 
@@ -137,22 +137,22 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         return whiteName;
     }
 
-    public String getPromotionFigure(){
+    public String getPromotionFigure() {
         return promotionFigure;
     }
 
-    public void createBoard(){
+    public void createBoard() {
         TableLayout l1 = (TableLayout) findViewById(R.id.chessBoard);
         TableRow rows[] = new TableRow[8];
 
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
 
-        for (int i=0; i<8; i++){
+        for (int i = 0; i < 8; i++) {
             rows[i] = new TableRow(this); // creating the rows in the TableLayout
-            for(int j=0; j<8; j++){
+            for (int j = 0; j < 8; j++) {
                 board[i][j] = new ImageButton(this); // creating the button and setting an id
-                board[i][j].setId(i*10+j);
+                board[i][j].setId(i * 10 + j);
 
                 board[i][j].setTag(""); // setting a tag - the tag represents the figure that is placed on the button
                 board[i][j].setLayoutParams(new TableRow.LayoutParams(width, height)); // setting the size of the button
@@ -168,7 +168,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         cM.reset();
     }
 
-    public void createScrollingListsForFallen(){
+    public void createScrollingListsForFallen() {
         TableLayout fallenBlack = (TableLayout) findViewById(R.id.fallenBlack);
         TableLayout fallenWhite = (TableLayout) findViewById(R.id.fallenWhite);
 
@@ -178,16 +178,16 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
 
-        for (int i = 0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             rowWhite[i] = new TableRow(this);
             rowBlack[i] = new TableRow(this);
-            for (int j = 0; j<8; j++){
+            for (int j = 0; j < 8; j++) {
                 this.fallenFiguresWhite[i][j] = new ImageView(this);
                 this.fallenFiguresBlack[i][j] = new ImageView(this);
 
                 //i don't think this is useful
-                this.fallenFiguresWhite[i][j].setId(100+i*10 + j);
-                this.fallenFiguresBlack[i][j].setId(200+i*10 + j);
+                this.fallenFiguresWhite[i][j].setId(100 + i * 10 + j);
+                this.fallenFiguresBlack[i][j].setId(200 + i * 10 + j);
 
                 this.fallenFiguresWhite[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
                 this.fallenFiguresBlack[i][j].setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -203,7 +203,7 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void winner(String title, String message){
+    public void winner(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(TheChessGame.this);
 
         builder.setCancelable(true);
@@ -219,25 +219,24 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
-    public void promotion(final String color, final int position){
-        ImageView [] images = new ImageView[4];
+    public void promotion(final String color, final int position) {
+        ImageView[] images = new ImageView[4];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(TheChessGame.this);
 
         builder.setCancelable(true);
         builder.setTitle("pick a figure");
 
-        for(int i =0; i<images.length; i++){
+        for (int i = 0; i < images.length; i++) {
             images[i] = new ImageView(this);
         }
 
-        if(color.equals("black")){
+        if (color.equals("black")) {
             images[0].setImageResource(R.mipmap.bishop_black);
             images[1].setImageResource(R.mipmap.knight_black);
             images[2].setImageResource(R.mipmap.queen_black);
             images[3].setImageResource(R.mipmap.rook_black);
-        }
-        else{
+        } else {
             images[0].setImageResource(R.mipmap.bishop_white);
             images[1].setImageResource(R.mipmap.knight_white);
             images[2].setImageResource(R.mipmap.queen_white);
@@ -246,8 +245,8 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         TableLayout tl = new TableLayout(this);
         TableRow tr = new TableRow(this);
-        for (int i = 0; i <images.length; i++){
-            images[i].setId((i+1)*1000);
+        for (int i = 0; i < images.length; i++) {
+            images[i].setId((i + 1) * 1000);
             images[i].setOnClickListener(this);
             tr.addView(images[i]);
         }
