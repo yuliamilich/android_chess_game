@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -265,5 +266,25 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
         builder.show();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnMusic:
+                // User chose the "btnMusic" item, show the app settings UI...
+                return true;
+
+            case R.id.btnMute:
+                // User chose the "btnMute" action, mark the current item
+                // as a favorite...
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
