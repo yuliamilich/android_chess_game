@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.yulia.milich.chess">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission-sdk-23 android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +34,17 @@
         <activity android:name=".ViewDB" />
         <activity android:name=".LogIn" />
         <activity android:name=".UserInfo" />
-        <activity android:name=".BatteryLevel"></activity>
+        <activity android:name=".BatteryLevel" />
+        <activity android:name=".Contacts" />
+
+        <!-- <service android:name="com.example.musicplayer.MusicService" /> -->
+
+
+        <!-- <uses-permission android:name="android.permission.WAKE_LOCK" -->
+        <!-- tools:ignore="WrongManifestParent" /> -->
+
+        <activity android:name=".MusicList"></activity>
+        <service android:name=".MusicService"/>
     </application>
 
 </manifest>

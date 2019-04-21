@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class BatteryLevel extends AppCompatActivity {
     private TextView mBatteryLevelText;
     private ProgressBar mBatteryLevelProgress;
-    private BroadcastReceiver mReceiver;
+    public BroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
