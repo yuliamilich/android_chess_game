@@ -3,6 +3,7 @@ package com.yulia.milich.chess;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -270,31 +271,46 @@ public class TheChessGame extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_all, menu);
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.btnMusic:
-                // User chose the "btnMusic" item, show the app settings UI...
-                return true;
+    public boolean onOptionsItemSelected(MenuItem item) { //when selcting option in the menu
+        // main --> go to menu
+        //music --> stop/play music
+        //instraction --> go to instraction
+        // call --> go to phone call
+        int id = item.getItemId();
+        Intent intent = null;
 
-            case R.id.btnMute:
-                // User chose the "btnMute" action, mark the current item
-                // as a favorite...
-                return true;
+        switch (id) {
+            case R.id.music:
+                if (MainMenu.isPlaying)
+                    MainMenu.musicService.pause();
+                else
+                    MainMenu.musicService.resume();
+                MainMenu.isPlaying = !MainMenu.isPlaying;
+                break;
+            case R.id.manu_main:
+                intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+                finish();
+                break;
 
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
+            case R.id.call:
+                intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ""));
+                startActivity(intent);
+                break;
+            case R.id.exit:
+                finish();
+                //System.exit(0);
+                break;
         }
+        return true;
     }
 }

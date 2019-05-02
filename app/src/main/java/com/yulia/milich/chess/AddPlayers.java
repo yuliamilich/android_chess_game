@@ -16,7 +16,6 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
     DBUsers users;
     private EditText playerWhite, passwordWhite;
     private EditText playerBlack, passwordBlack;
-    private String playerBlackStr,playerWhiteStr, passwordBlackStr, passwordWhiteStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +48,12 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
         switch (v.getId())
         {
             case R.id.done:
-                playerWhiteStr = playerWhite.getText().toString();
-                playerBlackStr = playerBlack.getText().toString();
-                passwordWhiteStr = passwordWhite.getText().toString();
-                passwordBlackStr = passwordBlack.getText().toString();
+                String playerWhiteStr = playerWhite.getText().toString();
+                String playerBlackStr = playerBlack.getText().toString();
+                String passwordWhiteStr = passwordWhite.getText().toString();
+                String passwordBlackStr = passwordBlack.getText().toString();
+
+                // if both the players are the same then you need to change one of them
                 if(playerBlackStr.equals(passwordWhiteStr)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddPlayers.this);
 
@@ -71,6 +72,7 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                     builder.show();
                 }
                 else{
+                    // if both users exist --> go the the next activity
                     if(users.doesUserExists(playerWhiteStr, passwordWhiteStr) && users.doesUserExists(playerBlackStr, passwordBlackStr)) {
                         intent = new Intent(this, TheChessGame.class);
                         intent.putExtra("playerWhiteStr", playerWhiteStr);
@@ -79,6 +81,7 @@ public class AddPlayers extends AppCompatActivity implements View.OnClickListene
                         finish();
                     }
                     else{
+                        // if one of the users is wrong then a message will appear
                         String title = "";
                         String message = "";
 

@@ -12,6 +12,7 @@ public class King extends Figure {
         return "king";
     }
 
+    // marks the squares where the king can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move) {
         int x = this.position / 10;
         int y = this.position % 10;
@@ -118,6 +119,7 @@ public class King extends Figure {
         }
     }
 
+    // returns if the king is under attack
     public boolean isCheck(Figure[][] figBoard, boolean[][] board, String[][] move) {
         int x = this.position / 10;
         int y = this.position % 10;

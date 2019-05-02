@@ -13,6 +13,7 @@ public class Bishop extends Figure{
         return "bishop";
     }
 
+    // marks the squares where the bishop can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         boolean pieceInTheWay = false;
         int x = this.position / 10;

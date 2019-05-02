@@ -36,6 +36,7 @@ public abstract class Figure {
 
     public abstract String getShape();
 
+    // marks the squares where the figure can move
     public abstract void move(Figure[][] figBoard, boolean[][] board, String[][] move);
 
 }

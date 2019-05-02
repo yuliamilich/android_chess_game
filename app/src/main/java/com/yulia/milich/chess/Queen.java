@@ -13,6 +13,7 @@ public class Queen extends Figure{
     }
 
     @Override
+    // marks the squares where the queen can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         boolean pieceInTheWay = false;
         int x = this.position / 10;

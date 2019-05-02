@@ -14,6 +14,7 @@ public class Rook extends Figure{
     }
 
     @Override
+    // marks the squares where the rook can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         boolean pieceInTheWay = false;
         int x = this.position / 10;

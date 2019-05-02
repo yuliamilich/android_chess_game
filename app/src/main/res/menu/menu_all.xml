@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/btnMusic"
-        android:title="select music"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/btnMusic"-->
+        <!--android:title="select music"-->
+        <!--app:showAsAction="never"/>-->
 
-    <item
-        android:id="@+id/btnMute"
-        android:title="Mute"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/btnMute"-->
+        <!--android:title="Mute"-->
+        <!--app:showAsAction="never"/>-->
 
-    <item
-        android:id="@+id/btnMainActivity"
-        android:title="Home"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/btnMainActivity"-->
+        <!--android:title="Home"-->
+        <!--app:showAsAction="never"/>-->
 
     <item
         android:orderInCategory="100"

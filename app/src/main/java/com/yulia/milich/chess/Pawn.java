@@ -12,6 +12,7 @@ public class Pawn extends Figure{
         return "pawn";
     }
 
+    // marks the squares where the pawn can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         int x = this.position / 10;
         int y = this.position % 10;

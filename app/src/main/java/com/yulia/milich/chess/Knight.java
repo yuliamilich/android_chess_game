@@ -13,6 +13,7 @@ public class Knight extends Figure{
         return "knight";
     }
 
+    // marks the squares where the knight can move
     public void move(Figure[][] figBoard, boolean[][] board, String[][] move){
         int x = this.position / 10;
         int y = this.position % 10;

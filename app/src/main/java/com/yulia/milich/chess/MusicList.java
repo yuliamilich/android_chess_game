@@ -117,6 +117,7 @@ public class MusicList extends AppCompatActivity {
             case R.id.manu_main:
                 intent = new Intent(MusicList.this, MainMenu.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.call:
