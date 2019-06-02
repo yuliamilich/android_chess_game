@@ -20,13 +20,13 @@ public class ChessManager {
             R.mipmap.knight_black, R.mipmap.rook_black, R.mipmap.pawn_black};
     private String[] figs = {"rook", "knight", "bishop", "king", "queen", "bishop", "knight", "rook", "pawn"};
     private TheChessGame gA;
-    private String[][] strBoard = new String[8][8];
-    private boolean[][] booleanBoard = new boolean[8][8];
+    private String[][] strBoard = new String[8][8];  //represents where a figure can move
+    private boolean[][] booleanBoard = new boolean[8][8];  //the board represents weather there is a figure on on the spot or not
     private Figure[][] figBoard = new Figure[8][8];
     SQLiteDatabase sqdb;
     DBUsers users;
 
-    private ArrayList<Figure> fallenFiguresWhite;
+    private ArrayList<Figure> fallenFiguresWhite;  // a list of all eaten figures
     private ArrayList<Figure> fallenFiguresBlack;
     private int numberOfWhiteFallen;
     private int numberOfBlackFallen;
@@ -40,8 +40,8 @@ public class ChessManager {
 
     private int lastPosition;
 
-    private King whiteKing = new King("white", 03, white[3]);
-    private King blackKing = new King("black", 73, black[3]);
+    private King whiteKing = new King("white", 04, white[3]);
+    private King blackKing = new King("black", 74, black[3]);
 
     public ChessManager(TheChessGame gA) {
         this.gA = gA;
@@ -54,8 +54,8 @@ public class ChessManager {
         figBoard[0][0] = new Rook("white", 00, white[0]);
         figBoard[0][1] = new Knight("white", 01, white[1]);
         figBoard[0][2] = new Bishop("white", 02, white[2]);
-        figBoard[0][3] = new King("white", 03, white[3]);
-        figBoard[0][4] = new Queen("white", 04, white[4]);
+        figBoard[0][4] = new King("white", 04, white[3]);
+        figBoard[0][3] = new Queen("white", 03, white[4]);
         figBoard[0][5] = new Bishop("white", 05, white[2]);
         figBoard[0][6] = new Knight("white", 06, white[1]);
         figBoard[0][7] = new Rook("white", 07, white[0]);
@@ -74,8 +74,8 @@ public class ChessManager {
         figBoard[7][0] = new Rook("black", 70, black[0]);
         figBoard[7][1] = new Knight("black", 71, black[1]);
         figBoard[7][2] = new Bishop("black", 72, black[2]);
-        figBoard[7][3] = new King("black", 73, black[3]);
-        figBoard[7][4] = new Queen("black", 74, black[4]);
+        figBoard[7][4] = new King("black", 74, black[3]);
+        figBoard[7][3] = new Queen("black", 73, black[4]);
         figBoard[7][5] = new Bishop("black", 75, black[2]);
         figBoard[7][6] = new Knight("black", 76, black[1]);
         figBoard[7][7] = new Rook("black", 77, black[0]);
@@ -94,7 +94,7 @@ public class ChessManager {
         clearFallenFigures();
         clearBoardBackground();
         clearStringBoard();
-        showBoard();
+        showBoard();  //shows the figures
         showScore();
         setBoardClickable();
 
@@ -117,9 +117,9 @@ public class ChessManager {
         for (int i = 0; i < gA.getBoard().length; i++) {
             for (int j = 0; j < gA.getBoard().length; j++) {
                 if ((i + j) % 2 == 1) {
-                    gA.getBoard()[i][j].setBackgroundResource(R.color.white);
-                } else {
                     gA.getBoard()[i][j].setBackgroundResource(R.color.someBlue);
+                } else {
+                    gA.getBoard()[i][j].setBackgroundResource(R.color.white);
                 }
             }
         }
@@ -168,6 +168,7 @@ public class ChessManager {
         }
     }
 
+    //shows the figures in the right place and sets the background to be in the right color
     public void showBoard() {
         for (int i = 0; i < booleanBoard.length; i++) {
             for (int j = 0; j < booleanBoard.length; j++) {
@@ -233,11 +234,11 @@ public class ChessManager {
         int nx = newPosition / 10;
         int ny = newPosition % 10;
 
-        figBoard[nx][ny] = figBoard[x][y];
+        figBoard[nx][ny] = figBoard[x][y];  //moving the figure
         figBoard[nx][ny].setPosition(newPosition);
         figBoard[nx][ny].setMoved();
 
-        booleanBoard[nx][ny] = true;
+        booleanBoard[nx][ny] = true;  //means that there is a figure on this spot
         booleanBoard[x][y] = false;
 
         if(figBoard[nx][ny].getShape().equals("pawn")){
@@ -342,6 +343,7 @@ public class ChessManager {
         }
     }
 
+    //updates the data base
     public void updateGames(String what, int add, String name) {
         Cursor data = users.getItem(name);
 
